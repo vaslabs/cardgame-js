@@ -10,12 +10,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { GameEventsComponent } from './game-events/game-events.component';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent
+    AdminComponent,
+    GameEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatGridListModule,
     MatFormFieldModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

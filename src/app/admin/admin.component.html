@@ -1,6 +1,6 @@
 <mat-grid-list cols="6" rowHeight="30px">
   <mat-grid-tile
-      [colspan]="1"
+      [colspan]="2"
       [rowspan]="2"
   >
   <button mat-button (click)="createGame()">Create game</button>
@@ -8,7 +8,7 @@
   </mat-grid-tile>
   
   <mat-grid-tile
-    [colspan]="1"
+    [colspan]="2"
     [rowspan]="2"
   >
   <mat-label>Auth token: </mat-label>
@@ -17,8 +17,14 @@
   </mat-grid-tile>
 
 
-  <mat-grid-tile [colspan]="1" [rowspan]="2">
+  <mat-grid-tile [colspan]="2" [rowspan]="2">
     Game id: {{ createdGame }}
 
   </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan] = "8">
+    <app-game-events></app-game-events>
+  </mat-grid-tile>
 </mat-grid-list>
+
+
+
