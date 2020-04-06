@@ -3,7 +3,7 @@
       [colspan]="1"
       [rowspan]="2"
   >
-  <button mat-button>Create game</button>
+  <button mat-button (click)="createGame()">Create game</button>
 
   </mat-grid-tile>
   
@@ -12,7 +12,13 @@
     [rowspan]="2"
   >
   <mat-label>Auth token: </mat-label>
-  <input matInput [type]="'password'" placeholder="Auth token">
+  <input #box matInput [type]="'password'" placeholder="Auth token" (keyup.enter)="update(box.value)" (blur)="update(box.value)">
+
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+    Game id: {{ createdGame }}
 
   </mat-grid-tile>
 </mat-grid-list>
