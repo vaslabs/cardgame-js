@@ -20,6 +20,7 @@ import { DiscardPileComponent } from './discard-pile/discard-pile.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { VisibleCardComponent } from './visible-card/visible-card.component';
+import { JoinComponent } from './join/join.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { VisibleCardComponent } from './visible-card/visible-card.component';
     DeckComponent,
     HandComponent,
     DiscardPileComponent,
-    VisibleCardComponent
+    VisibleCardComponent,
+    JoinComponent
   ],
   imports: [
     BrowserModule,

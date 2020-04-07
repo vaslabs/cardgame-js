@@ -1,5 +1,11 @@
 <mat-grid-list cols="4" rowHeight="100px">
     <mat-grid-tile
+        [colspan]="4"
+        [rowspan]="1"
+        [style.background]="'lightblue'">
+        <app-join (messageEvent)="receiveMessage($event)" style="min-width: 100%; min-height: 100%"></app-join>
+    </mat-grid-tile>
+    <mat-grid-tile
         [colspan]="1"
         [rowspan]="10"
         [style.background]="'lightblue'">
@@ -14,7 +20,7 @@
     <mat-grid-tile
         [colspan]="1"
         [rowspan]="6">
-        <app-deck></app-deck>
+        <app-deck [deck]="deck"></app-deck>
     </mat-grid-tile>
     <mat-grid-tile
     [colspan]="3"
