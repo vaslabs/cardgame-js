@@ -4,6 +4,7 @@ import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
 import { HandComponent } from '../hand/hand.component';
 import { DeckComponent } from '../deck/deck.component';
+import { DiscardPileComponent } from '../discard-pile/discard-pile.component';
 
 @Component({
   selector: 'app-game-board',
@@ -21,8 +22,8 @@ export class GameBoardComponent implements OnInit {
   userId = ""
 
   @ViewChild(JoinComponent) joinComponent;
-  @ViewChild(HandComponent) handComponent;
   @ViewChild(DeckComponent) deckComponent;
+  @ViewChild(DiscardPileComponent) discardPileComponent;
 
   ngAfterViewInit() {
     this.userId = this.joinComponent.userId;
@@ -46,9 +47,13 @@ export class GameBoardComponent implements OnInit {
           this.deckComponent.deck = data.StartedGame.deck
           this.deckComponent.localplayer = this.userId;
           this.deckComponent.gameId = this.gameId;
+          this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId}};
+          this.eventsService.emitLocalEvent(this.gameConfiguration);
         }
       )
   }
+
+  gameConfiguration = {}
 
   streamEvents() {
     this.eventsService.getGameEvent("http://localhost:8080/events/" + this.userId)
@@ -59,13 +64,11 @@ export class GameBoardComponent implements OnInit {
             console.log(gameEvent)
             if (gameEvent.GameStarted) {
               this.loadGame()
-            } else if (gameEvent.GotCard) {
-              console.log(gameEvent.GotCard.card.VisibleCard)
-              this.handComponent.cards.push(gameEvent.GotCard.card.VisibleCard)
             } else if (gameEvent.DeckShuffled) {
               this.deckComponent.deck = gameEvent.DeckShuffled.deck
+            } else if (gameEvent.PlayedCard) {
+              this.discardPileComponent.updateCard(gameEvent.PlayedCard.card)
             }
-
           }
         }
       )

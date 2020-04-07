@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import {SseService} from './sse.service'
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,22 @@ export class EventsService {
     private _sseService: SseService
   ) { }
 
+  defaultMessage: any = {}
+  private messageSource = new BehaviorSubject(this.defaultMessage);
+  currentMessage = this.messageSource.asObservable();
+
+  emitLocalEvent(event: {}) {
+    this.messageSource.next(event)
+  }
+
+  emitRemoteEvent(event: MessageEvent) {
+    if (event.data != "") {
+      const gameEvent = JSON.parse(event.data)
+      console.log(gameEvent)
+      this.messageSource.next(gameEvent)
+    }
+  }
+
   getGameEvent(url: string) {
     return Observable.create(
       observer => {
@@ -19,6 +35,7 @@ export class EventsService {
         
         eventSource.onmessage = event => {
           this._zone.run(() => {
+            this.emitRemoteEvent(event)
             observer.next(event)
           });
         };

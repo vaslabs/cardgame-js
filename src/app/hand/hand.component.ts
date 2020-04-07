@@ -1,13 +1,30 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
+import { EventsService } from '../events.service';
 @Component({
   selector: 'app-hand',
   templateUrl: './hand.component.html',
   styleUrls: ['./hand.component.css']
 })
-export class HandComponent {
+export class HandComponent implements OnInit{
 
-  constructor() { }
+  constructor(private eventService: EventsService) { }
+ 
+  ngOnInit(): void {
+    this.eventService.currentMessage.subscribe(
+      msg => {
+        console.log("From Hand component: " + msg)
+        if (msg.GotCard) {
+          this.addCard(msg.GotCard.card.VisibleCard)
+        } else if (msg.GameConfiguration) {
+          this.gameId = msg.GameConfiguration.id
+          this.playerId = msg.GameConfiguration.username
+        } else if (msg.PlayedCard) {
+          this.cards = this.cards.filter(c => c.id != msg.PlayedCard.card.id)
+        }
+      }
+    )
+  }
 
 
    // MatPaginator Inputs
@@ -17,8 +34,18 @@ export class HandComponent {
    @Input()
    cards = []
  
+   gameId = ""
+   playerId = ""
    // MatPaginator Output
    pageEvent: PageEvent;
+
+   addCard(visibleCard: any) {
+     if (!this.cards.find(value => value.id == visibleCard.id)) {
+      this.cards.push(visibleCard)
+      this.eventService.emitLocalEvent({GameConfiguration: {id: this.gameId, username: this.playerId}})
+     }
+   }
+
 
 
 }
