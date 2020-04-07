@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { JoinComponent } from '../join/join.component';
 import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
+import { HandComponent } from '../hand/hand.component';
 
 @Component({
   selector: 'app-game-board',
@@ -20,7 +21,11 @@ export class GameBoardComponent implements OnInit {
 
   deck = {cards: []}
 
+
+  hand = []
+
   @ViewChild(JoinComponent) joinComponent;
+  @ViewChild(HandComponent) handComponent;
 
   ngAfterViewInit() {
     this.userId = this.joinComponent.userId
@@ -51,9 +56,14 @@ export class GameBoardComponent implements OnInit {
         (data: MessageEvent) => {
           if (data.data != "") {
             const gameEvent = JSON.parse(data.data)
+            console.log(gameEvent)
             if (gameEvent.GameStarted) {
               this.loadGame()
-            } 
+            }
+            if (gameEvent.GotCard) {
+              console.log(gameEvent.GotCard.card.VisibleCard)
+              this.handComponent.cards.push(gameEvent.GotCard.card.VisibleCard)
+            }
           }
         }
       )

@@ -6,15 +6,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PlayerService {
 
+  authority: string = "http://localhost:8080"
+
   constructor(private http: HttpClient) { }
 
   joinGame(gameId: string, username: string) {
-    const uri = "http://localhost:8080/game/" + gameId + "/join?username=" + username
+    const uri = this.authority + "/game/" + gameId + "/join?username=" + username
     return this.http.post(uri, {})
   }
 
   recoverGame(gameId: string, username: string) {
-    const uri = "http://localhost:8080/game/" + gameId + "/" + username
+    const uri = this.authority + "/game/" + gameId + "/" + username
     return this.http.get(uri)
+  }
+
+  action(action: any, gameId: string) {
+    const uri = this.authority + "/action/" + gameId
+    return this.http.post(uri, action)
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 @Component({
   selector: 'app-hand',
@@ -14,10 +14,8 @@ export class HandComponent {
    length = 10;
    pageSize = 5;
 
-   cards = [
-     {id: "1", image: "assets/img/cattermelon.jpg"},
-     {id: "2", image: "assets/img/curse_of_the_cat_butt.jpg"},
-    ]
+   @Input()
+   cards = []
  
    // MatPaginator Output
    pageEvent: PageEvent;

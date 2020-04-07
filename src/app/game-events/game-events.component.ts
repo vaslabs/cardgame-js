@@ -14,7 +14,7 @@ export class GameEventsComponent {
   
 
   startEvents(gameId: string): void {
-    this._eventsService.getGameEvent("http://localhost:8080/events/" + gameId)
+    this._eventsService.getGameEvent("http://localhost:8080/events/vaslabs")
       .subscribe((data: MessageEvent) => {
         console.log(data)
         console.log(data.data)
