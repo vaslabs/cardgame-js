@@ -1,1 +1,7 @@
-<p>hand works!</p>
+<div class='internalMatGrid' >
+    <mat-grid-list cols="5" rowHeight="100px">
+      <mat-grid-tile [colspan]="1" [rowspan]="6"  *ngFor="let card of cards">
+          <app-visible-card [cardId]="card.id" [cardImage]="card.image"></app-visible-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+</div>

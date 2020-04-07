@@ -18,6 +18,8 @@ import { DeckComponent } from './deck/deck.component';
 import { HandComponent } from './hand/hand.component';
 import { DiscardPileComponent } from './discard-pile/discard-pile.component';
 import {MatCardModule} from '@angular/material/card';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { VisibleCardComponent } from './visible-card/visible-card.component';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import {MatCardModule} from '@angular/material/card';
     GamePlayersComponent,
     DeckComponent,
     HandComponent,
-    DiscardPileComponent
+    DiscardPileComponent,
+    VisibleCardComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import {MatCardModule} from '@angular/material/card';
     MatButtonModule,
     HttpClientModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
