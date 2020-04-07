@@ -20,12 +20,12 @@
     <mat-grid-tile
         [colspan]="1"
         [rowspan]="6">
-        <app-deck [deck]="deck" [localplayer]="userId" [gameId]="gameId"></app-deck>
+        <app-deck></app-deck>
     </mat-grid-tile>
     <mat-grid-tile
     [colspan]="3"
     [rowspan]="4"
     [style.background]="'lightpink'">
-    <app-hand (cards)="hand" style="min-width: 100%; min-height: 100%"></app-hand>
+    <app-hand style="min-width: 100%; min-height: 100%"></app-hand>
     </mat-grid-tile>
   </mat-grid-list>

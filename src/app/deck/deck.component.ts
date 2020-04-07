@@ -33,5 +33,18 @@ export class DeckComponent implements OnInit {
     }
   }
 
+  shuffle() {
+    if (this.localplayer && this.gameId) {
+      const action = { Shuffle: {player: this.localplayer}}
+      this.playerService.action(action, this.gameId).subscribe(
+        (event: any) => {
+          if (event.GotCard) {
+            this.deck.cards.pop()
+          }
+        }
+      )
+    }
+  }
+
 
 }

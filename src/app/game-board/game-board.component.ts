@@ -3,6 +3,7 @@ import { JoinComponent } from '../join/join.component';
 import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
 import { HandComponent } from '../hand/hand.component';
+import { DeckComponent } from '../deck/deck.component';
 
 @Component({
   selector: 'app-game-board',
@@ -19,16 +20,12 @@ export class GameBoardComponent implements OnInit {
   gameId = ""
   userId = ""
 
-  deck = {cards: []}
-
-
-  hand = []
-
   @ViewChild(JoinComponent) joinComponent;
   @ViewChild(HandComponent) handComponent;
+  @ViewChild(DeckComponent) deckComponent;
 
   ngAfterViewInit() {
-    this.userId = this.joinComponent.userId
+    this.userId = this.joinComponent.userId;
     this.gameId = this.joinComponent.gameId;
   }
 
@@ -45,8 +42,11 @@ export class GameBoardComponent implements OnInit {
   loadGame() {
     this.playerService.recoverGame(this.gameId, this.userId)
       .subscribe(
-        (data: any) =>
-          this.deck = data.StartedGame.deck
+        (data: any) => {
+          this.deckComponent.deck = data.StartedGame.deck
+          this.deckComponent.localplayer = this.userId;
+          this.deckComponent.gameId = this.gameId;
+        }
       )
   }
 
@@ -59,11 +59,13 @@ export class GameBoardComponent implements OnInit {
             console.log(gameEvent)
             if (gameEvent.GameStarted) {
               this.loadGame()
-            }
-            if (gameEvent.GotCard) {
+            } else if (gameEvent.GotCard) {
               console.log(gameEvent.GotCard.card.VisibleCard)
               this.handComponent.cards.push(gameEvent.GotCard.card.VisibleCard)
+            } else if (gameEvent.DeckShuffled) {
+              this.deckComponent.deck = gameEvent.DeckShuffled.deck
             }
+
           }
         }
       )
