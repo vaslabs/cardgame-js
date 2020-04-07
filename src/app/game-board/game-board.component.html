@@ -1,0 +1,25 @@
+<mat-grid-list cols="4" rowHeight="100px">
+    <mat-grid-tile
+        [colspan]="1"
+        [rowspan]="10"
+        [style.background]="'lightblue'">
+      players
+    </mat-grid-tile>
+    <mat-grid-tile
+        [colspan]="2"
+        [rowspan]="6"
+        [style.background]="'lightgreen'">
+    discard pile
+    </mat-grid-tile>
+    <mat-grid-tile
+        [colspan]="1"
+        [rowspan]="6">
+        <app-deck></app-deck>
+    </mat-grid-tile>
+    <mat-grid-tile
+    [colspan]="3"
+    [rowspan]="4"
+    [style.background]="'lightpink'">
+    player hand
+    </mat-grid-tile>
+  </mat-grid-list>

@@ -12,13 +12,24 @@ import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { GameEventsComponent } from './game-events/game-events.component';
 import {MatListModule} from '@angular/material/list';
+import { GameBoardComponent } from './game-board/game-board.component';
+import { GamePlayersComponent } from './game-players/game-players.component';
+import { DeckComponent } from './deck/deck.component';
+import { HandComponent } from './hand/hand.component';
+import { DiscardPileComponent } from './discard-pile/discard-pile.component';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminComponent,
-    GameEventsComponent
+    GameEventsComponent,
+    GameBoardComponent,
+    GamePlayersComponent,
+    DeckComponent,
+    HandComponent,
+    DiscardPileComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +40,8 @@ import {MatListModule} from '@angular/material/list';
     MatFormFieldModule,
     MatButtonModule,
     HttpClientModule,
-    MatListModule
+    MatListModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
