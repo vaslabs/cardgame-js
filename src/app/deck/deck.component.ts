@@ -45,8 +45,12 @@ export class DeckComponent implements OnInit {
   }
 
   drawCard() {
+    const action = { DrawCard: {player: this.localplayer}};
+    this.drawCardAction(action);
+  }
+
+  private drawCardAction(action: any) {
     if (this.localplayer && this.gameId) {
-      const action = { DrawCard: {player: this.localplayer}}
       this.playerService.action(action, this.gameId).subscribe(
         (event: any) => {
           if (event.GotCard) {
@@ -77,6 +81,13 @@ export class DeckComponent implements OnInit {
           }
         }
       )
+    }
+  }
+
+  drawFromTheBottom() {
+    if (this.localplayer && this.gameId) {
+      const action = { BottomDraw: {player: this.localplayer}};
+      this.drawCardAction(action);
     }
   }
 

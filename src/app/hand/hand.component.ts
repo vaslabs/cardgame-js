@@ -24,6 +24,13 @@ export class HandComponent implements OnInit{
           this.cards = this.cards.filter(c => c.id != msg.PlayedCard.card.id)
         } else if (msg.RecoverHand) {
           msg.RecoverHand.forEach(card => this.addCard(card.VisibleCard))
+        } else if (msg.MoveCard && msg.MoveCard.card.HiddenCard && msg.MoveCard.from == this.playerId) {
+          this.removeCard(msg.MoveCard.card.HiddenCard.id)
+        } else if (msg.MoveCard && msg.MoveCard.card.VisibleCard && msg.MoveCard.from == this.playerId) {
+          this.removeCard(msg.MoveCard.card.VisibleCard.id)
+        } 
+        else if (msg.MoveCard && msg.MoveCard.card.VisibleCard && msg.MoveCard.to == this.playerId) {
+          this.addCard(msg.MoveCard.card.VisibleCard)
         }
       }
     )
@@ -47,6 +54,10 @@ export class HandComponent implements OnInit{
       this.cards.push(visibleCard)
       this.eventService.emitLocalEvent({GameConfiguration: {id: this.gameId, username: this.playerId}})
      }
+   }
+
+   removeCard(id: string) {
+     this.cards = this.cards.filter(value => value.id != id)
    }
 
 

@@ -1,10 +1,11 @@
-<mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let player of players">
-        <div class="player-row">
+<mat-list role="list" *ngFor="let player of players">
+    <mat-list-item role="listitem">
+        <div mat-line>
            {{ player.id }}
-           <mat-spinner *ngIf="player.hasTurn" [diameter]="20"></mat-spinner> 
            <button *ngIf="!player.hasTurn && gameStarted" mat-flat-button color="primary" (click)="chooseNext(player.id)">Select Next</button>
+           <button *ngIf="gameStarted && player.id != localplayer && !player.hasTurn" mat-flat-button color="warn" (click)="openDialog(player.id)">Steal card</button>
         </div>
     </mat-list-item>
+    <mat-divider></mat-divider>
    
   </mat-list>

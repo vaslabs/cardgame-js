@@ -23,6 +23,10 @@ import { VisibleCardComponent } from './visible-card/visible-card.component';
 import { JoinComponent } from './join/join.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {CookieService} from 'ngx-cookie-service'
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {StealDialog} from './game-players/game-players.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import {CookieService} from 'ngx-cookie-service'
     HandComponent,
     DiscardPileComponent,
     VisibleCardComponent,
-    JoinComponent
+    JoinComponent,
+    StealDialog
   ],
   imports: [
     BrowserModule,
@@ -49,9 +54,15 @@ import {CookieService} from 'ngx-cookie-service'
     MatListModule,
     MatCardModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule
   ],
   providers: [CookieService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [StealDialog]
 })
 export class AppModule { }

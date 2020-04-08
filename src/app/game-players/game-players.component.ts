@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { EventsService } from '../events.service';
 import { PlayerService } from '../player.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+export interface DialogData {
+  from: string;
+  index: number;
+}
+
 
 @Component({
   selector: 'app-game-players',
@@ -9,12 +16,12 @@ import { PlayerService } from '../player.service';
 })
 export class GamePlayersComponent implements OnInit {
 
-  constructor(private eventService: EventsService, private playerService: PlayerService) { }
+  constructor(private eventService: EventsService, private playerService: PlayerService, public dialog: MatDialog) { }
 
   players = []
   private playerById = {}
   gameId = ""
-  private localplayer = ""
+  localplayer = ""
   gameStarted = false
 
   ngOnInit(): void {
@@ -94,6 +101,45 @@ export class GamePlayersComponent implements OnInit {
         (event: {NextPlayer: {player: string}}) =>
           this.setHasTurn(event.NextPlayer.player)
       )
+  }
+
+  steal(from: string, index: number) {
+    console.log('Wants to steal ' + index + " from " + from);
+    this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}}, this.gameId).subscribe(
+      (msg: any) => {
+        if (msg.MoveCard.card.VisibleCard) {
+          this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: msg.MoveCard.card}})
+        }
+      }
+    )
+  }
+
+  openDialog(from: string): void {
+    const dialogRef = this.dialog.open(StealDialog, {
+      width: '250px',
+      data: {from: from, index: 0}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.steal(from, result)
+    });
+  }
+
+
+}
+
+@Component({
+  selector: 'steal-dialog',
+  templateUrl: 'steal-dialog.html',
+})
+export class StealDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<StealDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

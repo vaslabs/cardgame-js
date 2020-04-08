@@ -1,0 +1,6 @@
+.button-row button,
+.button-row  {
+  margin-right: 8px;
+  border: 2px;
+  border-color: black;
+}
