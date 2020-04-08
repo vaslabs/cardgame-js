@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'app-discard-pile',
@@ -11,9 +12,16 @@ export class DiscardPileComponent implements OnInit {
 
   lastPlayed = { id: "0", image: "assets/img/hidden_card.jpg"}
 
-  constructor() { }
+  constructor(private eventService: EventsService) { }
 
   ngOnInit(): void {
+    this.eventService.currentMessage.subscribe(
+      msg => {
+        if (msg.PlayedCard) {
+          this.updateCard(msg.PlayedCard.card)
+        }
+      }
+    )
   }
 
   updateCard(card: any) {

@@ -15,7 +15,9 @@ export class HandComponent implements OnInit{
       msg => {
         console.log("From Hand component: " + msg)
         if (msg.GotCard) {
-          this.addCard(msg.GotCard.card.VisibleCard)
+          if (msg.GotCard.card.VisibleCard) {
+            this.addCard(msg.GotCard.card.VisibleCard)
+          }
         } else if (msg.GameConfiguration) {
           this.gameId = msg.GameConfiguration.id
           this.playerId = msg.GameConfiguration.username

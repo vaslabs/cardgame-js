@@ -44,7 +44,7 @@ export class GameBoardComponent implements OnInit {
     this.playerService.recoverGame(this.gameId, this.userId)
       .subscribe(
         (data: any) => {
-          this.deckComponent.deck = data.StartedGame.deck
+          this.deckComponent.setDeck(data.StartedGame.deck)
           this.deckComponent.localplayer = this.userId;
           this.deckComponent.gameId = this.gameId;
           this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId}};
@@ -64,10 +64,6 @@ export class GameBoardComponent implements OnInit {
             console.log(gameEvent)
             if (gameEvent.GameStarted) {
               this.loadGame()
-            } else if (gameEvent.DeckShuffled) {
-              this.deckComponent.deck = gameEvent.DeckShuffled.deck
-            } else if (gameEvent.PlayedCard) {
-              this.discardPileComponent.updateCard(gameEvent.PlayedCard.card)
             }
           }
         }
