@@ -1,1 +1,10 @@
-<p>game-players works!</p>
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let player of players">
+        <div class="player-row">
+           {{ player.id }}
+           <mat-spinner *ngIf="player.hasTurn" [diameter]="20"></mat-spinner> 
+           <button *ngIf="!player.hasTurn && gameStarted" mat-flat-button color="primary" (click)="chooseNext(player.id)">Select Next</button>
+        </div>
+    </mat-list-item>
+   
+  </mat-list>

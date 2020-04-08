@@ -1,0 +1,4 @@
+.player-row button, .player-row mat-spinner,
+.player-row  {
+  margin-right: 8px;
+}

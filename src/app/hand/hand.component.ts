@@ -13,7 +13,6 @@ export class HandComponent implements OnInit{
   ngOnInit(): void {
     this.eventService.currentMessage.subscribe(
       msg => {
-        console.log("From Hand component: " + msg)
         if (msg.GotCard) {
           if (msg.GotCard.card.VisibleCard) {
             this.addCard(msg.GotCard.card.VisibleCard)
@@ -23,6 +22,8 @@ export class HandComponent implements OnInit{
           this.playerId = msg.GameConfiguration.username
         } else if (msg.PlayedCard) {
           this.cards = this.cards.filter(c => c.id != msg.PlayedCard.card.id)
+        } else if (msg.RecoverHand) {
+          msg.RecoverHand.forEach(card => this.addCard(card.VisibleCard))
         }
       }
     )

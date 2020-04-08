@@ -21,7 +21,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { VisibleCardComponent } from './visible-card/visible-card.component';
 import { JoinComponent } from './join/join.component';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CookieService} from 'ngx-cookie-service'
 
 @NgModule({
   declarations: [
@@ -47,9 +48,10 @@ import { JoinComponent } from './join/join.component';
     HttpClientModule,
     MatListModule,
     MatCardModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

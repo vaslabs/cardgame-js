@@ -10,7 +10,8 @@ export class DiscardPileComponent implements OnInit {
 
   cards = []
 
-  lastPlayed = { id: "0", image: "assets/img/hidden_card.jpg"}
+  private hiddenCard = { id: "0", image: "assets/img/hidden_card.jpg"}
+  lastPlayed = this.hiddenCard
 
   constructor(private eventService: EventsService) { }
 
@@ -19,6 +20,11 @@ export class DiscardPileComponent implements OnInit {
       msg => {
         if (msg.PlayedCard) {
           this.updateCard(msg.PlayedCard.card)
+        } else if (msg.RecoverDiscardPile) {
+          console.log("Recovering discard pile " + JSON.stringify(msg.RecoverDiscardPile))
+          this.cards = [];
+          msg.RecoverDiscardPile.cards.forEach(c => this.updateCard(c.VisibleCard))
+          
         }
       }
     )
