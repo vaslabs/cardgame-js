@@ -27,6 +27,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StealDialog} from './game-players/game-players.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {StealDialog} from './game-players/game-players.component';
     MatButtonToggleModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ScrollingModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
