@@ -15,6 +15,9 @@ export class DeckComponent implements OnInit {
 
   gameId: string = null
 
+  nextCard = 'assets/img/hidden_card.jpg'
+  private defaultCard = 'assets/img/hidden_card.jpg'
+
   constructor(private playerService: PlayerService, private eventService: EventsService) { }
 
   ngOnInit(): void {
@@ -27,10 +30,19 @@ export class DeckComponent implements OnInit {
         } else if (msg.DeckShuffled) {
             this.deck = msg.DeckShuffled.deck
         } else if (msg.RecoverDeck) {
-          this.deck = msg.RecoverDeck.deck
+          this.setDeck(msg.RecoverDeck.deck)
         } else if (msg.GameConfiguration) {
           this.gameId = msg.GameConfiguration.id
           this.localplayer = msg.GameConfiguration.username
+        } else if (msg.BackToDeck) {
+          const position = msg.BackToDeck
+          if (position >= this.deck.cards.length) {
+            this.deck.cards.push(msg.BackToDeck.card)
+            this.updateCard()
+          } else {
+            this.deck.cards.splice(position, 0, msg.BackToDeck.card)
+            this.updateCard()
+          }
         }
       }
     );
@@ -38,10 +50,13 @@ export class DeckComponent implements OnInit {
 
   setDeck(deck) {
     this.deck = deck
+    this.updateCard()
+    this.eventService.emitLocalEvent({DeckSize: {value: this.deck.cards.length}})
   }
 
   drawCard() {
     const action = { DrawCard: {player: this.localplayer}};
+    this.updateCard()
     this.drawCardAction(action);
   }
 
@@ -65,6 +80,9 @@ export class DeckComponent implements OnInit {
       this.deck.cards = this.deck.cards.filter(card => 
         !(card.HiddenCard && card.HiddenCard.id == id || card.VisibleCard && card.VisibleCard.id == id)
       )
+      this.updateCard()
+
+      this.eventService.emitLocalEvent({DeckSize: {value: this.deck.cards.length}})
   }
 
   shuffle() {
@@ -78,6 +96,8 @@ export class DeckComponent implements OnInit {
         }
       )
     }
+    this.updateCard()
+
   }
 
   drawFromTheBottom() {
@@ -85,6 +105,9 @@ export class DeckComponent implements OnInit {
       const action = { BottomDraw: {player: this.localplayer}};
       this.drawCardAction(action);
     }
+    this.eventService.emitLocalEvent({DeckSize: {value: this.deck.cards.length}})
+    this.updateCard()
+
   }
 
   borrow(index: number) {
@@ -93,6 +116,19 @@ export class DeckComponent implements OnInit {
       borrowCard =>
         console.log("BorrowedCard " + JSON.stringify(borrowCard))
     )
+    this.updateCard()
+
+  }
+
+  private updateCard() {
+    if (this.deck.cards[0]) {
+      const card = this.deck.cards[0]
+      if (card.VisibleCard) {
+        this.nextCard = card.VisibleCard.image
+      } else {
+        this.nextCard = this.defaultCard
+      }
+    }
   }
 
 

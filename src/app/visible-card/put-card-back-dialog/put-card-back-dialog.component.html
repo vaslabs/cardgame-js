@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Return card to deck</h1>
+<div mat-dialog-content>
+  <div mat-form-field>
+    <mat-label>Position in deck (0 is on top): {{ data.index }}</mat-label>
+    <mat-slider thumbLabel tickInterval="1" min="0" [max]="data.maxIndex" value="0" step="1" [(ngModel)]="data.index"></mat-slider>
+  </div>
+  <div mat-form-field>
+    <mat-slide-toggle [(ngModel)]="data.visible">
+        <template *ngIf="!data.visible">
+            Face down
+        </template>
+        <template *ngIf="data.visible">
+            Face up
+        </template>
+    </mat-slide-toggle>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

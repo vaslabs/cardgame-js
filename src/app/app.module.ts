@@ -28,7 +28,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {StealDialog} from './game-players/game-players.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-
+import { PutCardBackDialogComponent } from './visible-card/put-card-back-dialog/put-card-back-dialog.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     DiscardPileComponent,
     VisibleCardComponent,
     JoinComponent,
-    StealDialog
+    StealDialog,
+    PutCardBackDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    ScrollingModule
+    ScrollingModule,
+    MatSlideToggleModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

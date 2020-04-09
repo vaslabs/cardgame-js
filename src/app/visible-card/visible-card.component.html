@@ -5,5 +5,6 @@
     <mat-card-actions>
       <button *ngIf="!borrowed" mat-button (click)="play()">Play</button>
       <button *ngIf="borrowed" mat-button (click)="returnToDeck()">Return</button>
+      <button *ngIf="!borrowed" mat-button (click)="openDialog()">Place in Deck</button>
     </mat-card-actions>
 </mat-card>
