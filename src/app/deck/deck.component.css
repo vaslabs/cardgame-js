@@ -4,3 +4,12 @@
   border: 2px;
   border-color: black;
 }
+
+mat-card {
+  background: #f4c366;
+  color: rgba(4, 4, 4, 0.87)
+}
+
+mat-content p {
+  font-size: 16px
+}
