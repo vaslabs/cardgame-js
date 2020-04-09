@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'board', component: GameBoardComponent
   }
+  , 
+  {
+    path: 'cardgame-js/board', component: GameBoardComponent
+  }
 ];
 
 @NgModule({
