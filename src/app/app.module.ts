@@ -30,6 +30,7 @@ import {StealDialog} from './game-players/game-players.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { PutCardBackDialogComponent } from './visible-card/put-card-back-dialog/put-card-back-dialog.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatInputModule} from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +65,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ReactiveFormsModule,
     MatFormFieldModule,
     ScrollingModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatInputModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
