@@ -3,6 +3,7 @@
     <mat-card-content>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button (click)="play()">Play</button>
+      <button *ngIf="!borrowed" mat-button (click)="play()">Play</button>
+      <button *ngIf="borrowed" mat-button (click)="returnToDeck()">Return</button>
     </mat-card-actions>
 </mat-card>

@@ -34,6 +34,10 @@ export class HandComponent implements OnInit{
         } 
         else if (msg.MoveCard && msg.MoveCard.card.VisibleCard && msg.MoveCard.to == this.playerId) {
           this.addCard(msg.MoveCard.card.VisibleCard)
+        } else if (msg.BorrowedCard && msg.BorrowedCard.card.VisibleCard) {
+          this.borrowCard(msg.BorrowedCard.card.VisibleCard)
+        } else if (msg.ReturnedCard) {
+          this.removeCard(msg.ReturnedCard.cardId)
         }
       }
     )
@@ -56,6 +60,11 @@ export class HandComponent implements OnInit{
      if (!this.cards.find(value => value.id == visibleCard.id)) {
       this.cards.push(visibleCard)
      }
+   }
+
+   borrowCard(visibleCard: any) {
+     visibleCard.borrowed = true
+     this.addCard(visibleCard)
    }
 
    removeCard(id: string) {
