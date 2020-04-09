@@ -22,7 +22,6 @@ export class GameEventsComponent implements OnInit {
   }
 
   events = [];
-  
 
   startEvents(server: string, gameId: string): void {
     this._eventsService.getGameEvent(server + "/events/vaslabs")
