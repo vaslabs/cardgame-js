@@ -37,7 +37,14 @@ export class HandComponent implements OnInit{
         } else if (msg.BorrowedCard && msg.BorrowedCard.card.VisibleCard) {
           this.borrowCard(msg.BorrowedCard.card.VisibleCard)
         } else if (msg.ReturnedCard) {
-          this.removeCard(msg.ReturnedCard.cardId)
+          this.removeCard(msg.ReturnedCard.card)
+        } else if (msg.BackToDeck) {
+          const card = msg.BackToDeck.card
+          if (card.VisibleCard) {
+            this.removeCard(card.VisibleCard.id)
+          } else if (card.HiddenCard.id) {
+            this.removeCard(card.HiddenCard.id)
+          }
         }
       }
     )

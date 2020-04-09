@@ -1,5 +1,5 @@
 <mat-card class="deck-top-card">
-    <img mat-card-image height="500rem" src="assets/img/hidden_card.jpg" alt="game deck">
+    <img mat-card-image height="500rem" [src]="nextCard" alt="game deck">
     <mat-card-content>
       <p>
         Cards left: {{ deck.cards.length }}
