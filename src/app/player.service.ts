@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { EventsService } from './events.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  authority: string = "http://localhost:8080"
+  authority: string = ""
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
 
-  joinGame(gameId: string, username: string) {
+  }
+
+
+
+  joinGame(server: string, gameId: string, username: string) {
+    this.authority = server;
     const uri = this.authority + "/game/" + gameId + "/join?username=" + username
     return this.http.post(uri, {})
   }
 
-  recoverGame(gameId: string, username: string) {
-    const uri = this.authority + "/game/" + gameId + "/" + username
+  recoverGame(server: string, gameId: string, username: string) {
+    this.authority = server
+    const uri = server + "/game/" + gameId + "/" + username
     return this.http.get(uri)
   }
 

@@ -34,7 +34,7 @@ export class VisibleCardComponent implements OnInit {
       const action = {PlayCard: {card: this.cardId, player: this.playerId}}
       this.playerService.action(action, this.gameId).subscribe(
         playedCard =>
-          this.cardId = ""
+          console.log("Playing " + JSON.stringify(playedCard))
       )
     } else {
       console.log("Card id is empty")

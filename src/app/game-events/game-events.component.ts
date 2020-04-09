@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../events.service';
 
 @Component({
@@ -6,30 +6,33 @@ import { EventsService } from '../events.service';
   templateUrl: './game-events.component.html',
   styleUrls: ['./game-events.component.css']
 })
-export class GameEventsComponent {
+export class GameEventsComponent implements OnInit {
 
   constructor(private _eventsService: EventsService) { }
+  
+  ngOnInit(): void {
+    this._eventsService.currentMessage.subscribe(
+      (msg: any) =>
+         {
+           if (msg.GameConfiguration) {
+             this.startEvents(msg.GameConfiguration.server, msg.GameConfiguration.id)
+           }
+         }
+    )
+  }
 
   events = [];
   
 
-  startEvents(gameId: string): void {
-    this._eventsService.getGameEvent("http://localhost:8080/events/vaslabs")
+  startEvents(server: string, gameId: string): void {
+    this._eventsService.getGameEvent(server + "/events/vaslabs")
       .subscribe((data: MessageEvent) => {
-        console.log(data)
-        console.log(data.data)
-      
         if (data.data != "")
           this.events.push(data.data)
       }
     );
   }
 
-  @Input()
-  set gameId(id: string) {
-    if (id != "")
-      this.startEvents(id);
-  }
 
   
 

@@ -1,12 +1,16 @@
 <div class='internalMatGrid' >
     <mat-grid-list cols="6" rowHeight="100px">
-      <mat-grid-tile [colspan]="3" [rowspan]="2">
+      <mat-grid-tile [colspan]="2" [rowspan]="2">
         <mat-label>Game id: </mat-label>
-        <input #gameid matInput placeholder="game code from admin" (keyup.enter)="updateGameId(gameid.value)" (blur)="updateGameId(gameid.value)">
+        <input #gameid matInput placeholder="game code from admin" [(ngModel)]="inputGameId">
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2" [rowspan]="2">
         <mat-label>User id: </mat-label>
-        <input #userid matInput placeholder="username" (keyup.enter)="updateUserId(userid.value)" (blur)="updateUserId(userid.value)">
+        <input #userid matInput placeholder="username" [(ngModel)]="inputUserId">
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-label>Server: </mat-label>
+        <input #server matInput placeholder="server" [(ngModel)]="inputServer">
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="2">
         <button mat-flat-button color="primary" (click)="joinGame()">Join</button>

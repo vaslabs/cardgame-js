@@ -9,6 +9,7 @@ import { EventsService } from '../events.service';
 export class DiscardPileComponent implements OnInit {
 
   cards = []
+  private cardById = {}
 
   private hiddenCard = { id: "0", image: "assets/img/hidden_card.jpg"}
   lastPlayed = this.hiddenCard
@@ -21,7 +22,6 @@ export class DiscardPileComponent implements OnInit {
         if (msg.PlayedCard) {
           this.updateCard(msg.PlayedCard.card)
         } else if (msg.RecoverDiscardPile) {
-          console.log("Recovering discard pile " + JSON.stringify(msg.RecoverDiscardPile))
           this.cards = [];
           msg.RecoverDiscardPile.cards.forEach(c => this.updateCard(c.VisibleCard))
           
@@ -31,8 +31,10 @@ export class DiscardPileComponent implements OnInit {
   }
 
   updateCard(card: any) {
-    this.cards.push(card)
-    this.lastPlayed = card;
+    if (!this.cardById[card.id]) {
+      this.cards.push(card)
+      this.lastPlayed = card;
+    }
   }
 
 }

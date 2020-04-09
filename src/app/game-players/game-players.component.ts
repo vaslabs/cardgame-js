@@ -23,6 +23,7 @@ export class GamePlayersComponent implements OnInit {
   gameId = ""
   localplayer = ""
   gameStarted = false
+  server = ""
 
   ngOnInit(): void {
     this.eventService.currentMessage.subscribe(
@@ -34,7 +35,8 @@ export class GamePlayersComponent implements OnInit {
         } else if (event.GameConfiguration) {
           this.gameId = event.GameConfiguration.id
           this.localplayer = event.GameConfiguration.username
-          this.playerService.recoverGame(this.gameId, this.localplayer)
+          this.server = event.GameConfiguration.server
+          this.playerService.recoverGame(this.server, this.gameId, this.localplayer)
             .subscribe(
               (res: any) => {
                 if (res.StartingGame) {

@@ -16,14 +16,13 @@ export class EventsService {
   private messageSource = new BehaviorSubject(this.defaultMessage);
   currentMessage = this.messageSource.asObservable();
 
-  emitLocalEvent(event: {}) {
+  emitLocalEvent(event: any) {
     this.messageSource.next(event)
   }
 
   emitRemoteEvent(event: MessageEvent) {
     if (event.data != "") {
       const gameEvent = JSON.parse(event.data)
-      console.log(gameEvent)
       this.messageSource.next(gameEvent)
     }
   }

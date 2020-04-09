@@ -9,6 +9,8 @@ import { EventsService } from '../events.service';
 export class HandComponent implements OnInit{
 
   constructor(private eventService: EventsService) { }
+
+  server = ""
  
   ngOnInit(): void {
     this.eventService.currentMessage.subscribe(
@@ -20,6 +22,7 @@ export class HandComponent implements OnInit{
         } else if (msg.GameConfiguration) {
           this.gameId = msg.GameConfiguration.id
           this.playerId = msg.GameConfiguration.username
+          this.server = msg.GameConfiguration.server
         } else if (msg.PlayedCard) {
           this.cards = this.cards.filter(c => c.id != msg.PlayedCard.card.id)
         } else if (msg.RecoverHand) {
@@ -52,7 +55,6 @@ export class HandComponent implements OnInit{
    addCard(visibleCard: any) {
      if (!this.cards.find(value => value.id == visibleCard.id)) {
       this.cards.push(visibleCard)
-      this.eventService.emitLocalEvent({GameConfiguration: {id: this.gameId, username: this.playerId}})
      }
    }
 

@@ -22,19 +22,15 @@ export class DeckComponent implements OnInit {
       (msg: any) => {
         if (msg.GotCard) {
           if (msg.GotCard.card.HiddenCard) {
-            console.log("must delete card")
             this.deleteCard(msg.GotCard.card.HiddenCard.id)
           } 
         } else if (msg.DeckShuffled) {
             this.deck = msg.DeckShuffled.deck
         } else if (msg.RecoverDeck) {
-          console.log("Recovering deck " + JSON.stringify(msg.RecoverDeck))
           this.deck = msg.RecoverDeck.deck
         } else if (msg.GameConfiguration) {
           this.gameId = msg.GameConfiguration.id
           this.localplayer = msg.GameConfiguration.username
-        } else {
-          console.log("Not handling " + JSON.stringify(msg))
         }
       }
     );
