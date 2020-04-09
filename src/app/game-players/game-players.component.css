@@ -7,3 +7,10 @@
     max-width: 300px;
 }
   
+.hasTurn {
+  background-color: lightgreen;
+}
+
+.noTurn {
+  background-color: transparent;
+}

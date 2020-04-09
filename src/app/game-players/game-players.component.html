@@ -1,6 +1,6 @@
 <mat-list role="list" *ngFor="let player of players">
     <mat-list-item role="listitem">
-        <div mat-line>
+        <div mat-line [class]="player.hasTurn ? 'hasTurn' : 'noTurn'">
             <div class="scroll-container">
                 {{ player.id }}
                 <button *ngIf="!player.hasTurn && gameStarted" mat-flat-button color="primary" (click)="chooseNext(player.id)">Select Next</button>
