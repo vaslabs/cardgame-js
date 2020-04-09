@@ -13,6 +13,7 @@ export class VisibleCardComponent implements OnInit {
   @Input() cardImage = ""
   @Input() playerId = ""
   @Input() gameId = ""
+  @Input() borrowed = false
 
   constructor(private playerService: PlayerService, private eventService: EventsService) { }
 
@@ -41,6 +42,12 @@ export class VisibleCardComponent implements OnInit {
     }
   }
 
-
+  returnToDeck() {
+    const action = {ReturnCard: {player: this.playerId, cardId: this.cardId}}
+    this.playerService.action(action, this.gameId).subscribe(
+      msg =>
+        console.log("Returning " + JSON.stringify(msg))
+    )
+  }
 
 }

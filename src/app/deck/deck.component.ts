@@ -87,5 +87,13 @@ export class DeckComponent implements OnInit {
     }
   }
 
+  borrow(index: number) {
+    const action = {BorrowCard: {player: this.localplayer, index: index}}
+    this.playerService.action(action, this.gameId).subscribe(
+      borrowCard =>
+        console.log("BorrowedCard " + JSON.stringify(borrowCard))
+    )
+  }
+
 
 }
