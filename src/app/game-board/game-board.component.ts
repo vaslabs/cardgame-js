@@ -58,7 +58,7 @@ export class GameBoardComponent implements OnInit {
 
   private removeTrailingSlash(server: string): string {
     const slash = server.lastIndexOf('/')
-    if (slash >= 0) {
+    if (slash  == server.length - 1) {
       return server.substring(0, slash)
     } else {
       return server
