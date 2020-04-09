@@ -56,9 +56,19 @@ export class GameBoardComponent implements OnInit {
 
   gameConfiguration = {}
 
+  private removeTrailingSlash(server: string): string {
+    const slash = server.lastIndexOf('/')
+    if (slash >= 0) {
+      return server.substring(0, slash)
+    } else {
+      return server
+    }
+  }
+
   streamEvents() {
+    
     if (this.server != "") {
-      this.eventsService.getGameEvent(this.server + "/events/" + this.userId)
+      this.eventsService.getGameEvent(this.removeTrailingSlash(this.server) + "/events/" + this.userId)
         .subscribe(
           (data: MessageEvent) => {
             if (data.data != "") {
