@@ -34,6 +34,8 @@ import {MatInputModule} from '@angular/material/input';
 import { AllCardsViewComponent } from './discard-pile/all-cards-view/all-cards-view.component';
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatIconModule} from '@angular/material/icon';
+import { EventShowerComponent } from './game-board/event-shower/event-shower.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import {MatIconModule} from '@angular/material/icon';
     JoinComponent,
     StealDialog,
     PutCardBackDialogComponent,
-    AllCardsViewComponent
+    AllCardsViewComponent,
+    EventShowerComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatSlideToggleModule,
     MatInputModule,
     MatBottomSheetModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

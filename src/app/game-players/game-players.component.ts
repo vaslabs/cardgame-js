@@ -75,6 +75,8 @@ export class GamePlayersComponent implements OnInit {
         } else if (event.GameStarted) {
           this.gameStarted = true
           this.setHasTurn(event.GameStarted.startingPlayer)
+        } else if (event.PlayerLeft) {
+          this.removePlayer(event.PlayerLeft.player, event.PlayerLeft.nextCurrentPlayer)
         }
       }
 
@@ -130,9 +132,7 @@ export class GamePlayersComponent implements OnInit {
   kill(player: string): void {
     this.playerService.action({Leave: {player: player}}, this.gameId).subscribe(
       (msg: any) => {
-        if (msg.PlayerLeft) {
-          this.removePlayer(msg.PlayerLeft.player, msg.PlayerLeft.nextPlayer)
-        }
+        console.log("Leaving the game")
       }
     )
   }

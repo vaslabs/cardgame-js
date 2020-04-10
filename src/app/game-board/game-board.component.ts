@@ -3,6 +3,8 @@ import { JoinComponent } from '../join/join.component';
 import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
 import { DeckComponent } from '../deck/deck.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EventShowerComponent } from './event-shower/event-shower.component';
 
 @Component({
   selector: 'app-game-board',
@@ -11,7 +13,7 @@ import { DeckComponent } from '../deck/deck.component';
 })
 export class GameBoardComponent implements OnInit {
 
-  constructor(private playerService: PlayerService, private eventsService: EventsService) { }
+  constructor(private playerService: PlayerService, private eventsService: EventsService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -75,11 +77,32 @@ export class GameBoardComponent implements OnInit {
               const gameEvent = JSON.parse(data.data)
               if (gameEvent.GameStarted) {
                 this.loadGame()
+              } else {
+                this.openSnackBar(gameEvent)
               }
             }
           }
         )
     }
+  }
+
+  private durationInSeconds = 5
+
+  openSnackBar(event) {
+    const message = this.eventMessage(event)
+    if (message) {
+      this._snackBar.openFromComponent(EventShowerComponent, {
+        duration: this.durationInSeconds * 1000,
+        data: {message: message}
+      });
+    }
+  }
+
+  private eventMessage(event: any): string {
+    if (event.DeckShuffled) {
+      return "Deck shuffled"
+    } else 
+      return undefined
   }
 
   
