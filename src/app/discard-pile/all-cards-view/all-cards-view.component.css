@@ -1,0 +1,9 @@
+mat-card {
+    width: 100px;
+    height: 400px;
+}
+
+.bottom-sheet {
+    min-width: 500px;
+    min-height: 800px;
+}

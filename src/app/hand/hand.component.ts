@@ -45,6 +45,10 @@ export class HandComponent implements OnInit{
           } else if (card.HiddenCard.id) {
             this.removeCard(card.HiddenCard.id)
           }
+        } else if (msg.CardRecovered) {
+          if (msg.CardRecovered.card.VisibleCard && msg.CardRecovered.player == this.playerId) {
+            this.addCard(msg.CardRecovered.card.VisibleCard)
+          }
         }
       }
     )

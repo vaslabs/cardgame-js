@@ -1,0 +1,9 @@
+<div class="bottom-sheet">
+    <mat-grid-list cols="3" rowHeight="400px" >
+        <mat-grid-tile *ngFor="let card of data.cards" rowSpan="1" colSpan="1">
+            <a href='#' (click)="recoverCard(card.id, $event)">
+                <img mat-card-image height="400px" width="100px" [src]="card.image" alt="discard pile">
+            </a>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

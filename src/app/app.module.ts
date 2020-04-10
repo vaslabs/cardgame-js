@@ -31,6 +31,10 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import { PutCardBackDialogComponent } from './visible-card/put-card-back-dialog/put-card-back-dialog.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatInputModule} from '@angular/material/input';
+import { AllCardsViewComponent } from './discard-pile/all-cards-view/all-cards-view.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatIconModule} from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +48,8 @@ import {MatInputModule} from '@angular/material/input';
     VisibleCardComponent,
     JoinComponent,
     StealDialog,
-    PutCardBackDialogComponent
+    PutCardBackDialogComponent,
+    AllCardsViewComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +71,9 @@ import {MatInputModule} from '@angular/material/input';
     MatFormFieldModule,
     ScrollingModule,
     MatSlideToggleModule,
-    MatInputModule
+    MatInputModule,
+    MatBottomSheetModule,
+    MatIconModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
