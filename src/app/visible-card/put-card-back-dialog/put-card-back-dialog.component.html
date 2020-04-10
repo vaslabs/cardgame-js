@@ -6,12 +6,12 @@
   </div>
   <div mat-form-field>
     <mat-slide-toggle [(ngModel)]="data.visible">
-        <template *ngIf="!data.visible">
+        <mat-label *ngIf="!data.visible">
             Face down
-        </template>
-        <template *ngIf="data.visible">
+        </mat-label>
+        <mat-label *ngIf="data.visible">
             Face up
-        </template>
+        </mat-label>
     </mat-slide-toggle>
   </div>
 </div>
