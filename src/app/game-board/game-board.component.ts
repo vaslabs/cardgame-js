@@ -101,7 +101,10 @@ export class GameBoardComponent implements OnInit {
   private eventMessage(event: any): string {
     if (event.DeckShuffled) {
       return "Deck shuffled"
-    } else 
+    } else if (event.BorrowedCard) {
+      return event.BorrowedCard.playerId + " borrowed a card from deck"
+    }
+    else 
       return undefined
   }
 
