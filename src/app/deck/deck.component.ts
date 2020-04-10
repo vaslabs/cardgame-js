@@ -35,7 +35,7 @@ export class DeckComponent implements OnInit {
           this.gameId = msg.GameConfiguration.id
           this.localplayer = msg.GameConfiguration.username
         } else if (msg.BackToDeck) {
-          const position = msg.BackToDeck
+          const position = msg.BackToDeck.index
           if (position >= this.deck.cards.length) {
             this.deck.cards.push(msg.BackToDeck.card)
             this.updateCard()
