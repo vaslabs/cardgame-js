@@ -93,11 +93,10 @@ export class DeckComponent implements OnInit {
           if (event.GotCard) {
             this.deck.cards.pop()
           }
+          this.updateCard()
         }
       )
     }
-    this.updateCard()
-
   }
 
   drawFromTheBottom() {
@@ -129,6 +128,7 @@ export class DeckComponent implements OnInit {
         this.nextCard = this.defaultCard
       }
     }
+    this.eventService.emitLocalEvent({DeckSize: {value: this.deck.cards.length}})
   }
 
 
