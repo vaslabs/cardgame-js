@@ -127,6 +127,21 @@ export class GamePlayersComponent implements OnInit {
     });
   }
 
+  kill(player: string): void {
+    this.playerService.action({Leave: {player: player}}, this.gameId).subscribe(
+      (msg: any) => {
+        if (msg.PlayerLeft) {
+          this.removePlayer(msg.PlayerLeft.player, msg.PlayerLeft.nextPlayer)
+        }
+      }
+    )
+  }
+
+  private removePlayer(id: string, nextPlayer: number) {
+    this.players = this.players.filter(p => p.id != id)
+    this.setHasTurn(this.players[nextPlayer].id)
+  
+  }
 
 }
 
