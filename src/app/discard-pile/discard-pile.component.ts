@@ -57,6 +57,8 @@ export class DiscardPileComponent implements OnInit {
     if (this.cardById[cardId]) {
       this.cards = this.cards.filter(c => c.id != cardId)
       this.cardById[cardId] = false
+      if (this.cards.length > 0)
+        this.lastPlayed = this.cards[this.cards.length - 1]
     }
   }
 
