@@ -1,5 +1,6 @@
 <div class='internalMatGrid scroll-container' >
-    <mat-grid-list cols="5" rowHeight="100px">
+
+    <mat-grid-list cols="5" rowHeight="100px" cdkDropList  (cdkDropListDropped)="drop($event)">
         <mat-grid-tile [colspan]="1" [rowspan]="6"  *ngFor="let card of cards" style="max-height: 600px">
             <div>
                 <app-visible-card [borrowed]="card.borrowed || false" [cardId]="card.id" [cardImage]="card.image" [gameId]="gameId" [playerId]="playerId"></app-visible-card>

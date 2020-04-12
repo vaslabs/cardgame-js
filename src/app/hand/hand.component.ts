@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import { EventsService } from '../events.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-hand',
   templateUrl: './hand.component.html',
@@ -49,6 +50,8 @@ export class HandComponent implements OnInit{
           if (msg.CardRecovered.card.VisibleCard && msg.CardRecovered.player == this.playerId) {
             this.addCard(msg.CardRecovered.card.VisibleCard)
           }
+        } else if (msg.RecoverBorrow) {
+          msg.RecoverBorrow.forEach(card => this.borrowCard(card.VisibleCard));
         }
       }
     )
@@ -83,5 +86,8 @@ export class HandComponent implements OnInit{
    }
 
 
+   drop($event: any) {
+     console.log($event.currentIndex)
+   }
 
 }

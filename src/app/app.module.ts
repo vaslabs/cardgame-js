@@ -36,6 +36,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatIconModule} from '@angular/material/icon';
 import { EventShowerComponent } from './game-board/event-shower/event-shower.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatInputModule,
     MatBottomSheetModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    DragDropModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

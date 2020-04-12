@@ -67,6 +67,11 @@ export class GamePlayersComponent implements OnInit {
                     {RecoverDeck: {deck: res.StartedGame.deck}}
                   );
 
+                  const borrowed = res.StartedGame.deck.borrowed
+                  if (borrowed && borrowed.playerId == this.localplayer) {
+                    this.eventService.emitLocalEvent({RecoverBorrow: borrowed.cards})
+                  }
+
 
                 }
               }
