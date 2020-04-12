@@ -1,0 +1,14 @@
+<br>
+<mat-slider thumbLabel min="minDice" max="10" [(ngModel)]="numberOfDice"></mat-slider>
+
+<mat-slider thumbLabel min="6" max="25" [(ngModel)]="sides"></mat-slider>
+
+<button mat-fab (click)="throw()">
+    <mat-icon>casino</mat-icon>
+</button>
+
+<ul>
+    <li *ngFor="let die of results">
+        {{ die.result }}
+    </li>
+</ul>

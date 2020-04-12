@@ -37,6 +37,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { EventShowerComponent } from './game-board/event-shower/event-shower.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DiceComponent } from './dice/dice.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     StealDialog,
     PutCardBackDialogComponent,
     AllCardsViewComponent,
-    EventShowerComponent
+    EventShowerComponent,
+    DiceComponent
   ],
   imports: [
     BrowserModule,
