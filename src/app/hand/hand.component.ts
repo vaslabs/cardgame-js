@@ -94,9 +94,12 @@ export class HandComponent implements OnInit{
 
    shuffleHand() {
      const action = {ShuffleHand: {player: this.playerId}}
-     this.playerService.action(action, this.playerId).subscribe (
-       (msg: {ShuffledHand: {player: string, cards: any[]}}) =>
-        this.cards = msg.ShuffledHand.cards
+     this.playerService.action(action, this.gameId).subscribe (
+       (msg: {ShuffledHand: {player: string, hand: any[]}}) => {
+        this.cards = []
+        msg.ShuffledHand.hand.forEach(card => this.addCard(card.VisibleCard))
+       }
+        
      )
    }
 
