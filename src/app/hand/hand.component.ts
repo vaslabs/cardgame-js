@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import { EventsService } from '../events.service';
 import { PlayerService } from '../player.service';
-import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
 
 @Component({
   selector: 'app-hand',
@@ -54,6 +53,9 @@ export class HandComponent implements OnInit{
           }
         } else if (msg.RecoverBorrow) {
           msg.RecoverBorrow.forEach(card => this.borrowCard(card.VisibleCard));
+        } else if (msg.ShuffledHand) {
+          this.cards = []
+          msg.ShuffledHand.hand.forEach(card => this.addCard(card.VisibleCard))
         }
       }
     )
@@ -95,11 +97,8 @@ export class HandComponent implements OnInit{
    shuffleHand() {
      const action = {ShuffleHand: {player: this.playerId}}
      this.playerService.action(action, this.gameId).subscribe (
-       (msg: {ShuffledHand: {player: string, hand: any[]}}) => {
-        this.cards = []
-        msg.ShuffledHand.hand.forEach(card => this.addCard(card.VisibleCard))
-       }
-        
+       (msg: {ShuffledHand: {player: string, hand: any[]}}) => 
+        console.log(this.playerId + " shuffled hand")
      )
    }
 
