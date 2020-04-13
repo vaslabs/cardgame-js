@@ -39,6 +39,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SetupGameComponent } from './setup-game/setup-game.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { DiceComponent } from './dice/dice.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +57,8 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
     PutCardBackDialogComponent,
     AllCardsViewComponent,
     EventShowerComponent,
-    SetupGameComponent
+    SetupGameComponent,
+    DiceComponent
   ],
   imports: [
     BrowserModule,
