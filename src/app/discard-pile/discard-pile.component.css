@@ -9,5 +9,6 @@ mat-content p {
 }
 
 img {
+    height: 16rem;
     width: 10rem;
 }

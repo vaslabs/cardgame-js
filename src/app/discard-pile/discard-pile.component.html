@@ -1,9 +1,7 @@
 <mat-card class="deck-top-card">
     <img mat-card-image [src]="lastPlayed.image" alt="discard pile">
     <mat-card-content>
-    <p>
         Cards played: {{ cards.length }}
-    </p>
     </mat-card-content>
     <mat-card-actions>
         <button mat-fab aria-label="Look cards" (click)="openBottomSheet()">

@@ -6,12 +6,12 @@
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto auto auto;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    max-height: 18rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-height: 32rem;
 }
 .grid-item {
-    padding: 20px;
-    font-size: 30px;
+    padding: 10px;
+    font-size: 20px;
     text-align: center;
 }

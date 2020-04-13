@@ -1,9 +1,10 @@
 img {
-    width: 6em;
-    height: 12em;
+    height: 22rem;
 }
 
 
 .visible-card {
     background-color: transparent;
+    max-height: 32rem;
+    margin-right: 1rem;
 }
