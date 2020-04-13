@@ -3,8 +3,7 @@ import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
 import { PutCardBackDialogComponent } from './put-card-back-dialog/put-card-back-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import {DialogData} from './put-card-back-dialog/put-card-back-dialog.component'
-import { stringify } from 'querystring';
+
 interface PatchDeck {
   index: number
   cardId: string

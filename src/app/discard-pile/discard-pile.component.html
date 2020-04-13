@@ -1,35 +1,13 @@
-<div class='internalMatGrid'>
-    <mat-grid-list cols="9" rowHeight="100px">
-        <mat-grid-tile [colspan]="3" [rowspan]="1">
-            
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="6">
-            <mat-card class="deck-top-card">
-                <img mat-card-image height="400px" width="100px" [src]="lastPlayed.image" alt="discard pile">
-                <mat-card-content>
-                <p>
-                    Cards played: {{ cards.length }}
-                </p>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-fab aria-label="Look cards" (click)="openBottomSheet()">
-                        <mat-icon>view_module</mat-icon>
-                    </button>
-                </mat-card-actions>
-            </mat-card>        
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="1">
-            
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="1">
-            
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="1">
-            
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="1">
-            
-        </mat-grid-tile>
-      </mat-grid-list>
-
-</div>
+<mat-card class="deck-top-card">
+    <img mat-card-image [src]="lastPlayed.image" alt="discard pile">
+    <mat-card-content>
+    <p>
+        Cards played: {{ cards.length }}
+    </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-fab aria-label="Look cards" (click)="openBottomSheet()">
+            <mat-icon>view_module</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>        

@@ -1,7 +1,5 @@
 <mat-card class="visible-card">
-    <img mat-card-image height="250rem" [src]="cardImage" alt="hand">
-    <mat-card-content>
-    </mat-card-content>
+    <img mat-card-image [src]="cardImage" alt="hand">
     <mat-card-actions>
       <button *ngIf="!borrowed" mat-button (click)="play()">Play</button>
       <button *ngIf="borrowed" mat-button (click)="returnToDeck()">Return</button>

@@ -1,0 +1,23 @@
+.join-item { grid-area: join; }
+.players-item { grid-area: players; }
+.discard-pile-item { grid-area: discard-pile; }
+.deck-item { grid-area: deck; }
+.hand-item { grid-area: hand; }
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+      'join    join         join         join         join         join'
+      'players discard-pile discard-pile discard-pile discard-pile deck'
+      'players hand         hand         hand         hand         hand';
+    grid-gap: 10px;
+    background-color: #2196F3;
+    padding: 10px;
+  }
+  
+  .grid-container > div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 16px;
+  }

@@ -1,0 +1,9 @@
+img {
+    width: 6em;
+    height: 12em;
+}
+
+
+.visible-card {
+    background-color: transparent;
+}

@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 import { EventsService } from '../events.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { PlayerService } from '../player.service';
+import { MatCarousel, MatCarouselComponent } from '@ngmodule/material-carousel';
+
 @Component({
   selector: 'app-hand',
   templateUrl: './hand.component.html',
@@ -9,7 +11,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 })
 export class HandComponent implements OnInit{
 
-  constructor(private eventService: EventsService) { }
+  constructor(private eventService: EventsService, private playerService: PlayerService) { }
 
   server = ""
  
@@ -88,6 +90,14 @@ export class HandComponent implements OnInit{
 
    drop($event: any) {
      console.log($event.currentIndex)
+   }
+
+   shuffleHand() {
+     const action = {ShuffleHand: {player: this.playerId}}
+     this.playerService.action(action, this.playerId).subscribe (
+       (msg: {ShuffledHand: {player: string, cards: any[]}}) =>
+        this.cards = msg.ShuffledHand.cards
+     )
    }
 
 }

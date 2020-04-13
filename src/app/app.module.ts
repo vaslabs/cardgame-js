@@ -38,7 +38,7 @@ import { EventShowerComponent } from './game-board/event-shower/event-shower.com
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SetupGameComponent } from './setup-game/setup-game.component';
-
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +81,7 @@ import { SetupGameComponent } from './setup-game/setup-game.component';
     MatBottomSheetModule,
     MatIconModule,
     MatSnackBarModule,
-    DragDropModule
+    MatCarouselModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

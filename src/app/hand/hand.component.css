@@ -1,7 +1,17 @@
-.internalMatGrid{  border:1px solid red; min-width:80%; min-height: 600px; max-height: 600px}
 
 .scroll-container {
     overflow-y: scroll;
-    max-height: 600px;
 }
-  
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    max-height: 18rem;
+}
+.grid-item {
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+}
