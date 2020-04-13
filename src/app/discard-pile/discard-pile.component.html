@@ -1,11 +1,8 @@
 <mat-card class="deck-top-card">
     <img mat-card-image [src]="lastPlayed.image" alt="discard pile">
     <mat-card-content>
-        Cards played: {{ cards.length }}
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-fab aria-label="Look cards" (click)="openBottomSheet()">
+        <button mat-mini-fab aria-label="Look cards" (click)="openBottomSheet()">
             <mat-icon>view_module</mat-icon>
-        </button>
-    </mat-card-actions>
-</mat-card>        
+        </button>Cards played: {{ cards.length }}
+    </mat-card-content>
+</mat-card>
