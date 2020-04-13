@@ -36,9 +36,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatIconModule} from '@angular/material/icon';
 import { EventShowerComponent } from './game-board/event-shower/event-shower.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 import { SetupGameComponent } from './setup-game/setup-game.component';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { DiceComponent } from './dice/dice.component';
 
 @NgModule({
@@ -83,8 +81,7 @@ import { DiceComponent } from './dice/dice.component';
     MatInputModule,
     MatBottomSheetModule,
     MatIconModule,
-    MatSnackBarModule,
-    MatCarouselModule
+    MatSnackBarModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
