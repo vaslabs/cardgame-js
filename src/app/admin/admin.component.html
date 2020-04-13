@@ -24,6 +24,9 @@
   <mat-grid-tile [colspan]="1" [rowspan] = "8">
     <app-game-events></app-game-events>
   </mat-grid-tile>
+  <mat-grid-tile [colspan]="2">
+    Link: <span><a [href]="'/setup?game-id=' + createdGame + '&server='"></a></span>
+  </mat-grid-tile>
 </mat-grid-list>
 
 
