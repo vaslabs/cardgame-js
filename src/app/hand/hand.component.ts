@@ -9,7 +9,7 @@ import { PlayerService } from '../player.service';
   styleUrls: ['./hand.component.css']
 })
 export class HandComponent implements OnInit{
-
+s
   constructor(private eventService: EventsService, private playerService: PlayerService) { }
 
   server = ""
@@ -54,8 +54,10 @@ export class HandComponent implements OnInit{
         } else if (msg.RecoverBorrow) {
           msg.RecoverBorrow.forEach(card => this.borrowCard(card.VisibleCard));
         } else if (msg.ShuffledHand) {
-          this.cards = []
-          msg.ShuffledHand.hand.forEach(card => this.addCard(card.VisibleCard))
+          if (msg.ShuffledHand.playerId == this.playerId) {
+            this.cards = []
+            msg.ShuffledHand.hand.forEach(card => this.addCard(card.VisibleCard))
+          }
         }
       }
     )
