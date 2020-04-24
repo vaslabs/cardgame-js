@@ -24,9 +24,12 @@ export class DeckComponent implements OnInit {
     this.eventService.currentMessage.subscribe(
       (msg: any) => {
         if (msg.GotCard) {
-          if (msg.GotCard.card.HiddenCard) {
-            this.deleteCard(msg.GotCard.card.HiddenCard.id)
-          } 
+          let card = msg.GotCard.card
+          if (card.HiddenCard) {
+            this.deleteCard(card.HiddenCard.id)
+          } else if (card.VisibleCard) {
+            this.deleteCard(card.VisibleCard.id)
+          }
         } else if (msg.DeckShuffled) {
             this.deck = msg.DeckShuffled.deck
         } else if (msg.RecoverDeck) {
