@@ -9,8 +9,11 @@ import { PlayerService } from '../player.service';
   styleUrls: ['./hand.component.css']
 })
 export class HandComponent implements OnInit{
-s
-  constructor(private eventService: EventsService, private playerService: PlayerService) { }
+
+  constructor(
+    private eventService: EventsService, 
+    private playerService: PlayerService,
+  ) { }
 
   server = ""
  
@@ -103,5 +106,4 @@ s
         console.log(this.playerId + " shuffled hand")
      )
    }
-
 }

@@ -3,6 +3,8 @@ import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
 import { PutCardBackDialogComponent } from './put-card-back-dialog/put-card-back-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ViewCardComponent } from './view-card/view-card.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 interface PatchDeck {
   index: number
@@ -24,7 +26,11 @@ export class VisibleCardComponent implements OnInit {
 
   private deckSize = 0
 
-  constructor(private playerService: PlayerService, private eventService: EventsService, public dialog: MatDialog) { }
+  constructor(
+    private playerService: PlayerService, 
+    private eventService: EventsService, 
+    public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
     this.eventService.currentMessage.subscribe(
@@ -84,6 +90,11 @@ export class VisibleCardComponent implements OnInit {
         this.putBackToDeck({HiddenCard: card}, result.index)
       }
     });
+  }
+
+  enlargeImage($event) {
+    $event.preventDefault()
+    this._bottomSheet.open(ViewCardComponent, {data: {uri: this.cardImage}});
   }
 
 }

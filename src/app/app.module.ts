@@ -38,6 +38,7 @@ import { EventShowerComponent } from './game-board/event-shower/event-shower.com
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SetupGameComponent } from './setup-game/setup-game.component';
 import { DiceComponent } from './dice/dice.component';
+import { ViewCardComponent } from './visible-card/view-card/view-card.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { DiceComponent } from './dice/dice.component';
     AllCardsViewComponent,
     EventShowerComponent,
     SetupGameComponent,
-    DiceComponent
+    DiceComponent,
+    ViewCardComponent
   ],
   imports: [
     BrowserModule,
