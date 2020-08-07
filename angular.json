@@ -119,9 +119,16 @@
               "devServerTarget": "cardgame-app:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     }
   },
-  "defaultProject": "cardgame-app"
+  "defaultProject": "cardgame-app",
+  "cli": {
+    "analytics": false
+  }
 }
