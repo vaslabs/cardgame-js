@@ -13,7 +13,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./front-ends/eac-demo
 
     steps:
       - uses: actions/checkout@v1
