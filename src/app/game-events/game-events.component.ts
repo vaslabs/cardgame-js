@@ -24,7 +24,7 @@ export class GameEventsComponent implements OnInit {
   events = [];
 
   startEvents(server: string, gameId: string): void {
-    this._eventsService.getGameEvent(server + "/events/vaslabs")
+    this._eventsService.getGameEvent(server + "/events/vaslabs", "vaslabs")
       .subscribe((data: MessageEvent) => {
         if (data.data != "")
           this.events.push(data.data)

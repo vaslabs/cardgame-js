@@ -70,7 +70,7 @@ export class GameBoardComponent implements OnInit {
   streamEvents() {
     
     if (this.server != "") {
-      this.eventsService.getGameEvent(this.removeTrailingSlash(this.server) + "/events/" + this.userId)
+      this.eventsService.getGameEvent(this.removeTrailingSlash(this.server) + "/events/" + this.userId, this.userId)
         .subscribe(
           (data: MessageEvent) => {
             if (data.data != "") {
