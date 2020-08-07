@@ -40,4 +40,5 @@ export class PlayerService {
     const uri = this.authority + "/action/" + gameId
     return this.http.post(uri, action)
   }
+
 }

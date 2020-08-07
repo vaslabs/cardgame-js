@@ -27,9 +27,15 @@ export class EventsService {
   emitRemoteEvent(event: MessageEvent) {
     if (event.data != "") {
       const gameEvent = JSON.parse(event.data)
-      this.messageSource.next(gameEvent)
+      if (this.isFutureEvent(gameEvent)) {
+        this.messageSource.next(gameEvent)
+      }
       this.vectorClock.tickClocks(this.username, gameEvent.vectorClock, gameEvent.serverClock)
     }
+  }
+
+  isFutureEvent(event): boolean {
+    return event.serverClock > this.vectorClock.serverClock
   }
 
   getGameEvent(url: string, username) {
