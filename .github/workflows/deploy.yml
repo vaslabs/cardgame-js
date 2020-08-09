@@ -2,7 +2,7 @@ on:
   push:
     branches: [ master ]
 
-name: Build Angular
+name: Build WebApp
 jobs:
   build:
     runs-on: ubuntu-latest

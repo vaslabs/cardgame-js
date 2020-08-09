@@ -1,5 +1,7 @@
 # CardgameApp
 
+![Build WebApp](https://github.com/vaslabs/cardgame-js/workflows/Build%20WebApp/badge.svg)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
 
 ## Development server

@@ -11,14 +11,15 @@ export class VectorClockService {
 
 
   constructor(private cookieService: CookieService) {
+    this.recover()
   }
 
   tick(me: string): { [key:string]:number; } {
     if (this.vectorClock[me] >= 0)
       this.vectorClock[me]++
     else
-      this.vectorClock[me] = 0
-    
+      this.vectorClock[me] = 1
+    this.persist()
     return this.vectorClock
   }
 
@@ -33,6 +34,21 @@ export class VectorClockService {
     });
     this.serverClock = Math.max(this.serverClock, serverClock)
     this.tick(me)
+    this.persist()
     return this.vectorClock
+  }
+
+  persist() {
+    this.cookieService.set("vector-clock", JSON.stringify(this.vectorClock))
+    this.cookieService.set("server-clock", this.serverClock.toString())
+  }
+
+  recover() {
+    const vectorClock: string = this.cookieService.get("vector-clock")
+    const serverClock: string = this.cookieService.get("server-clock")
+    if (vectorClock)
+      this.vectorClock = JSON.parse(vectorClock)
+    if (serverClock)
+      this.serverClock = parseInt(serverClock)
   }
 }

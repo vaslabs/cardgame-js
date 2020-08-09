@@ -103,6 +103,11 @@ export class GameBoardComponent implements OnInit {
       return "Deck shuffled"
     } else if (event.BorrowedCard) {
       return event.BorrowedCard.playerId + " borrowed a card from deck"
+    } else if (event.OutOfSync) {
+      if (event.OutOfSync.playerId == this.userId) {
+        return "Your game is out of sync, close other game tabs and try to refresh"
+      } else 
+        return event.OutOfSync.playerId + " is out of sync"
     }
     else 
       return undefined
