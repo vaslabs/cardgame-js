@@ -1,18 +1,15 @@
 .button-row button,
-.button-row  {
+.button-row {
   margin-right: 8px;
   border: 2px;
   border-color: black;
 }
-
 mat-card {
   color: rgba(4, 4, 4, 0.87);
 }
-
 mat-content p {
-  font-size: 16px
+  font-size: 16px;
 }
-
 img {
   height: 16rem;
   width: 10rem;
