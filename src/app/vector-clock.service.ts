@@ -18,7 +18,7 @@ export class VectorClockService {
     if (this.vectorClock[me] >= 0)
       this.vectorClock[me]++
     else
-      this.vectorClock[me] = 0
+      this.vectorClock[me] = 1
     this.persist()
     return this.vectorClock
   }
