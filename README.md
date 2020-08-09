@@ -1,5 +1,7 @@
 # CardgameApp
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7dc35d6b24b45ab92c0a49f3d2b100c)](https://app.codacy.com/manual/vaslabs/cardgame-js?utm_source=github.com&utm_medium=referral&utm_content=vaslabs/cardgame-js&utm_campaign=Badge_Grade_Dashboard)
+
 ![Build WebApp](https://github.com/vaslabs/cardgame-js/workflows/Build%20WebApp/badge.svg)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
