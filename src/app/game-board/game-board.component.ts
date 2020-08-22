@@ -22,6 +22,10 @@ export class GameBoardComponent implements OnInit {
           this.gameId = msg.GameConfiguration.id
           this.userId = msg.GameConfiguration.username
           this.server = msg.GameConfiguration.server
+        } else if (msg.GameStarted) {
+          this.loadGame()
+        } else {
+          this.openSnackBar(msg)
         }
       }
     )
@@ -53,21 +57,6 @@ export class GameBoardComponent implements OnInit {
   }
 
   gameConfiguration = {}
-
-  streamEvents() {
-    
-    if (this.server != "") {
-      this.eventsService.currentMessage.subscribe(
-        (msg: any) => {
-          if (msg.GameStarted) {
-            this.loadGame()
-          } else {
-            this.openSnackBar(msg)
-          }
-        }
-      )
-    }
-  }
 
   private durationInSeconds = 5
 

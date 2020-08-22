@@ -32,8 +32,8 @@ export class VectorClockService {
         this.vectorClock[key] = clocks[key]
       }
     });
-    if (this.serverClock[gameId]) {
-      this.serverClock[gameId] = 1
+    if (!this.serverClock[gameId]) {
+      this.serverClock[gameId] = 0
     }
     this.serverClock[gameId] = Math.max(this.serverClock[gameId], serverClock)
     this.tick(me)
@@ -47,6 +47,8 @@ export class VectorClockService {
 
   persist(gameId: string) {
     this.persistVectorClock()
+    if (!this.serverClock[gameId])
+      this.serverClock[gameId] = 0
     this.cookieService.set(`server-clock-${gameId}`, this.serverClock[gameId].toString())
 
   }
