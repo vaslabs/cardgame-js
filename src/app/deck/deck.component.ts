@@ -65,17 +65,7 @@ export class DeckComponent implements OnInit {
 
   private drawCardAction(action: any) {
     if (this.localplayer && this.gameId) {
-      this.playerService.action(action, this.gameId).subscribe(
-        (event: any) => {
-          if (event.GotCard) {
-            if (event.GotCard.card.VisibleCard) {
-              this.deleteCard(event.GotCard.card.VisibleCard.id)
-            } else if (event.GotCard.card.HiddenCard) {
-              this.deleteCard(event.GotCard.card.HiddenCard.id)
-            }
-          }
-        }
-      )
+      this.playerService.action(action, this.gameId)
     }
   }
 
@@ -91,14 +81,7 @@ export class DeckComponent implements OnInit {
   shuffle() {
     if (this.localplayer && this.gameId) {
       const action = { Shuffle: {player: this.localplayer}}
-      this.playerService.action(action, this.gameId).subscribe(
-        (event: any) => {
-          if (event.GotCard) {
-            this.deck.cards.pop()
-          }
-          this.updateCard()
-        }
-      )
+      this.playerService.action(action, this.gameId)
     }
   }
 
@@ -114,10 +97,7 @@ export class DeckComponent implements OnInit {
 
   borrow(index: number) {
     const action = {BorrowCard: {player: this.localplayer, index: index}}
-    this.playerService.action(action, this.gameId).subscribe(
-      borrowCard =>
-        console.log("BorrowedCard " + JSON.stringify(borrowCard))
-    )
+    this.playerService.action(action, this.gameId)
     this.updateCard()
 
   }

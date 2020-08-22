@@ -50,10 +50,7 @@ export class VisibleCardComponent implements OnInit {
   play() {
     if (this.cardId != "" && this.playerId != "" && this.gameId != "") {
       const action = {PlayCard: {card: this.cardId, player: this.playerId}}
-      this.playerService.action(action, this.gameId).subscribe(
-        playedCard =>
-          console.log("Playing " + JSON.stringify(playedCard))
-      )
+      this.playerService.action(action, this.gameId)
     } else {
       console.log("Card id is empty")
     }
@@ -61,19 +58,12 @@ export class VisibleCardComponent implements OnInit {
 
   returnToDeck() {
     const action = {ReturnCard: {player: this.playerId, cardId: this.cardId}}
-    this.playerService.action(action, this.gameId).subscribe(
-      msg =>
-        console.log("Returning " + JSON.stringify(msg))
-    )
+    this.playerService.action(action, this.gameId)
   }
 
   putBackToDeck(card: any, position: number) {
     const action = {PutCardBack: {card: card, player: this.playerId, index: position}}
-    this.playerService.action(action, this.gameId).subscribe(
-      msg =>
-        console.log("Put back to deck " + JSON.stringify(msg))
-    )
-    console.log("Returning card " + JSON.stringify(card) + " to " + position)
+    this.playerService.action(action, this.gameId)
   }
 
   openDialog(): void {

@@ -44,8 +44,6 @@ export class DiceComponent implements OnInit {
     this.playerService.action(
       action, 
       this.gameId
-    ).subscribe(
-      msg => console.log(JSON.stringify(msg))
     )
   }
 

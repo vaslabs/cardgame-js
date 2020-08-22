@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EventsService } from './events.service';
 import { VectorClockService } from './vector-clock.service';
+import {WebsocketService} from './websocket.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,9 @@ export class PlayerService {
 
   authority: string = ""
   username: string = null
+  actionEvents: Subject<MessageEvent> = null
 
-  constructor(private http: HttpClient, private vectorClock: VectorClockService) { 
+  constructor(private http: HttpClient, private vectorClock: VectorClockService, private websocketService: WebsocketService) { 
 
   }
 
@@ -22,7 +24,15 @@ export class PlayerService {
     const uri = this.authority + "/game/" + gameId + "/join?username=" + username
     this.username = username
     this.vectorClock.tick(username)
-    return this.http.post(uri, {})
+    this.connectToPlayingEvents(server, gameId, username)
+     return this.http.post(uri, {})
+  }
+
+  private connectToPlayingEvents = (server, gameId, username) => {
+    const websocketUri = server.replace("http://", "ws://").replace("https://", "wss://")
+
+    this.actionEvents = this.websocketService.connect(websocketUri + `/live/actions/${gameId}/${username}`)
+   
   }
 
   recoverGame(server: string, gameId: string, username: string) {
@@ -30,15 +40,17 @@ export class PlayerService {
     const uri = server + "/game/" + gameId + "/" + username
     this.username = username
     this.vectorClock.tick(username)
+    this.connectToPlayingEvents(server, gameId, username)
+
     return this.http.get(uri)
   }
 
   action(action: any, gameId: string) {
+    
     if (this.username) {
       action.vectorClock = this.vectorClock.tick(this.username)
     }
-    const uri = this.authority + "/action/" + gameId
-    return this.http.post(uri, action)
+    this.actionEvents.next(action)
   }
 
 }

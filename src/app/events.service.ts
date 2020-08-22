@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import {SseService} from './sse.service'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { VectorClockService } from './vector-clock.service';
-import { tick } from '@angular/core/testing';
+import { WebsocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class EventsService {
 
   constructor(
     private _zone: NgZone, 
-    private _sseService: SseService,
+    private websocketService: WebsocketService,
     private vectorClock: VectorClockService
   ) { }
 
@@ -38,25 +38,26 @@ export class EventsService {
     return event.serverClock > this.vectorClock.serverClock
   }
 
-  getGameEvent(url: string, username) {
+  streamGameEvents(username: string) {
     this.username = username
-    return Observable.create(
+    const observable = Observable.create(
       observer => {
-        const eventSource = this._sseService.getEventSource(url);
-        
-        eventSource.onmessage = event => {
+        observer.next = event => {
+          console.log("On message")
           this._zone.run(() => {
             this.emitRemoteEvent(event)
-            observer.next(event)
           });
         };
 
-        eventSource.onerror = error => {
+        observer.onerror = error => {
           this._zone.run( () => {
             observer.error(error)
           });
         };
+        this.websocketService.subject.subscribe(observer);
+       
       }
     )
+    return observable
   }
 }

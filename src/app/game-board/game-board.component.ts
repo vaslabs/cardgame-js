@@ -70,18 +70,16 @@ export class GameBoardComponent implements OnInit {
   streamEvents() {
     
     if (this.server != "") {
-      this.eventsService.getGameEvent(this.removeTrailingSlash(this.server) + "/events/" + this.userId, this.userId)
+      this.eventsService.streamGameEvents(this.userId)
         .subscribe(
-          (data: MessageEvent) => {
-            if (data.data != "") {
-              const gameEvent = JSON.parse(data.data)
+          (event: MessageEvent) => {
+            const gameEvent = JSON.parse(event.data)
               if (gameEvent.GameStarted) {
                 this.loadGame()
               } else {
                 this.openSnackBar(gameEvent)
               }
             }
-          }
         )
     }
   }
