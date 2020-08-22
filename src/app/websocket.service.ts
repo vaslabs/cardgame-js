@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, Observer } from 'rxjs';
+import { Observable, Subject, Observer, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   subject: Subject<MessageEvent>;
+  defaultMessage: any = {}
+
+  ready = new BehaviorSubject(this.defaultMessage)
 
   constructor() { }
 
@@ -14,6 +17,7 @@ export class WebsocketService {
       this.subject = this.create(url);
       console.log("Successfully connected: " + url);
     }
+    this.ready.next({ready:true})
     return this.subject;
   }
 

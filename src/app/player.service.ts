@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { VectorClockService } from './vector-clock.service';
 import {WebsocketService} from './websocket.service';
 import { Subject } from 'rxjs';
+import { EventsService } from './events.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class PlayerService {
   username: string = null
   actionEvents: Subject<MessageEvent> = null
 
-  constructor(private http: HttpClient, private vectorClock: VectorClockService, private websocketService: WebsocketService) { 
+  constructor(private http: HttpClient, private vectorClock: VectorClockService, private websocketService: WebsocketService, private eventsService: EventsService) { 
 
   }
 
@@ -25,13 +26,15 @@ export class PlayerService {
     this.username = username
     this.vectorClock.tick(username)
     this.connectToPlayingEvents(server, gameId, username)
-     return this.http.post(uri, {})
+    return this.http.post(uri, {})
   }
 
   private connectToPlayingEvents = (server, gameId, username) => {
     const websocketUri = server.replace("http://", "ws://").replace("https://", "wss://")
 
     this.actionEvents = this.websocketService.connect(websocketUri + `/live/actions/${gameId}/${username}`)
+
+    this.eventsService.streamGameEvents(username, gameId).subscribe((event: any) => console.log(JSON.stringify(event)))
    
   }
 

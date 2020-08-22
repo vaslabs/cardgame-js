@@ -16,6 +16,15 @@ export class GameBoardComponent implements OnInit {
   constructor(private playerService: PlayerService, private eventsService: EventsService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.eventsService.currentMessage.subscribe(
+      (msg: any) => {
+        if (msg.GameConfiguration) {
+          this.gameId = msg.GameConfiguration.id
+          this.userId = msg.GameConfiguration.username
+          this.server = msg.GameConfiguration.server
+        }
+      }
+    )
   }
 
   gameId = ""
@@ -24,19 +33,6 @@ export class GameBoardComponent implements OnInit {
 
   @ViewChild(JoinComponent) joinComponent;
   @ViewChild(DeckComponent) deckComponent;
-
-  ngAfterViewInit() {
-    this.eventsService.currentMessage.subscribe(
-      (msg: any) => {
-        if (msg.GameConfiguration) {
-          this.gameId = msg.GameConfiguration.id
-          this.userId = msg.GameConfiguration.username
-          this.server = msg.GameConfiguration.server
-          this.streamEvents();
-        }
-      }
-    )
-  }
 
   showJoin(): boolean {
     return this.gameId == ""
@@ -61,17 +57,15 @@ export class GameBoardComponent implements OnInit {
   streamEvents() {
     
     if (this.server != "") {
-      this.eventsService.streamGameEvents(this.userId, this.gameId)
-        .subscribe(
-          (event: MessageEvent) => {
-            const gameEvent = JSON.parse(event.data)
-            if (gameEvent.GameStarted) {
-                this.loadGame()
-            } else {
-                this.openSnackBar(gameEvent)
-              }
-            }
-        )
+      this.eventsService.currentMessage.subscribe(
+        (msg: any) => {
+          if (msg.GameStarted) {
+            this.loadGame()
+          } else {
+            this.openSnackBar(msg)
+          }
+        }
+      )
     }
   }
 

@@ -1,5 +1,4 @@
 import { Injectable, NgZone } from '@angular/core';
-import {SseService} from './sse.service'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { VectorClockService } from './vector-clock.service';
 import { WebsocketService } from './websocket.service';
@@ -9,17 +8,19 @@ import { WebsocketService } from './websocket.service';
 })
 export class EventsService {
 
+  defaultMessage: any = {}
+  private messageSource = new BehaviorSubject(this.defaultMessage);
+  currentMessage: Observable<any> = this.messageSource.asObservable();
+  username = null;
+  gameId = null;
+
   constructor(
     private _zone: NgZone, 
     private websocketService: WebsocketService,
     private vectorClock: VectorClockService
-  ) { }
+  ) { 
+  }
 
-  defaultMessage: any = {}
-  private messageSource = new BehaviorSubject(this.defaultMessage);
-  currentMessage = this.messageSource.asObservable();
-  username = null;
-  gameId = null;
 
   emitLocalEvent(event: any) {
     this.messageSource.next(event)
@@ -39,13 +40,12 @@ export class EventsService {
     return event.serverClock > this.vectorClock.serverClock
   }
 
-  streamGameEvents(username: string, gameId: string) {
+  streamGameEvents(username: string, gameId: string): Observable<any> {
     this.username = username
     this.gameId = gameId
     const observable = Observable.create(
       observer => {
         observer.next = event => {
-          console.log("On message")
           this._zone.run(() => {
             this.emitRemoteEvent(event)
           });
