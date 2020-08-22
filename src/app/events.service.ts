@@ -37,7 +37,7 @@ export class EventsService {
   }
 
   isFutureEvent(event): boolean {
-    return event.serverClock > this.vectorClock.serverClock
+    return event.serverClock > this.vectorClock.serverClock[this.gameId]
   }
 
   streamGameEvents(username: string, gameId: string): Observable<any> {

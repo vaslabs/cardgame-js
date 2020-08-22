@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class VectorClockService {
 
   vectorClock: { [key:string]:number; } = {}
-  serverClock: number = 0
+  serverClock: { [key:string]:number; } = {}
 
 
   constructor(private cookieService: CookieService) {
@@ -32,7 +32,10 @@ export class VectorClockService {
         this.vectorClock[key] = clocks[key]
       }
     });
-    this.serverClock = Math.max(this.serverClock, serverClock)
+    if (this.serverClock[gameId]) {
+      this.serverClock[gameId] = 1
+    }
+    this.serverClock[gameId] = Math.max(this.serverClock[gameId], serverClock)
     this.tick(me)
     this.persist(gameId)
     return this.vectorClock
@@ -44,16 +47,17 @@ export class VectorClockService {
 
   persist(gameId: string) {
     this.persistVectorClock()
-    this.cookieService.set(`server-clock-${gameId}`, this.serverClock.toString())
+    this.cookieService.set(`server-clock-${gameId}`, this.serverClock[gameId].toString())
 
   }
 
   recover() {
+    const gameId = this.cookieService.get("game-id") 
     const vectorClock: string = this.cookieService.get("vector-clock")
-    const serverClock: string = this.cookieService.get("server-clock")
+    const serverClock: string = this.cookieService.get(`server-clock-${gameId}`)
     if (vectorClock)
       this.vectorClock = JSON.parse(vectorClock)
     if (serverClock)
-      this.serverClock = parseInt(serverClock)
+      this.serverClock[gameId] = parseInt(serverClock) | 0
   }
 }
