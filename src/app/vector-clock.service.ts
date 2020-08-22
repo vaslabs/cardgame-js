@@ -19,11 +19,11 @@ export class VectorClockService {
       this.vectorClock[me]++
     else
       this.vectorClock[me] = 1
-    this.persist()
+    this.persistVectorClock()
     return this.vectorClock
   }
 
-  tickClocks(me: string, clocks: { [key:string]:number; }, serverClock: number): { [key:string]:number; } {
+  tickClocks(me: string, clocks: { [key:string]:number; }, serverClock: number, gameId: string): { [key:string]:number; } {
     Object.keys(clocks).forEach(key => {
       if (this.vectorClock[key] >= 0) {
         const value = this.vectorClock[key]
@@ -34,13 +34,18 @@ export class VectorClockService {
     });
     this.serverClock = Math.max(this.serverClock, serverClock)
     this.tick(me)
-    this.persist()
+    this.persist(gameId)
     return this.vectorClock
   }
 
-  persist() {
+  persistVectorClock() {
     this.cookieService.set("vector-clock", JSON.stringify(this.vectorClock))
-    this.cookieService.set("server-clock", this.serverClock.toString())
+  }
+
+  persist(gameId: string) {
+    this.persistVectorClock()
+    this.cookieService.set(`server-clock-${gameId}`, this.serverClock.toString())
+
   }
 
   recover() {

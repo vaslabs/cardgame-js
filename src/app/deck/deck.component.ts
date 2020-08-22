@@ -65,7 +65,7 @@ export class DeckComponent implements OnInit {
 
   private drawCardAction(action: any) {
     if (this.localplayer && this.gameId) {
-      this.playerService.action(action, this.gameId)
+      this.playerService.action(action)
     }
   }
 
@@ -81,7 +81,7 @@ export class DeckComponent implements OnInit {
   shuffle() {
     if (this.localplayer && this.gameId) {
       const action = { Shuffle: {player: this.localplayer}}
-      this.playerService.action(action, this.gameId)
+      this.playerService.action(action)
     }
   }
 
@@ -97,7 +97,7 @@ export class DeckComponent implements OnInit {
 
   borrow(index: number) {
     const action = {BorrowCard: {player: this.localplayer, index: index}}
-    this.playerService.action(action, this.gameId)
+    this.playerService.action(action)
     this.updateCard()
 
   }

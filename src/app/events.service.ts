@@ -19,6 +19,7 @@ export class EventsService {
   private messageSource = new BehaviorSubject(this.defaultMessage);
   currentMessage = this.messageSource.asObservable();
   username = null;
+  gameId = null;
 
   emitLocalEvent(event: any) {
     this.messageSource.next(event)
@@ -30,7 +31,7 @@ export class EventsService {
       if (this.isFutureEvent(gameEvent)) {
         this.messageSource.next(gameEvent)
       }
-      this.vectorClock.tickClocks(this.username, gameEvent.vectorClock, gameEvent.serverClock)
+      this.vectorClock.tickClocks(this.username, gameEvent.vectorClock, gameEvent.serverClock, this.gameId)
     }
   }
 
@@ -38,8 +39,9 @@ export class EventsService {
     return event.serverClock > this.vectorClock.serverClock
   }
 
-  streamGameEvents(username: string) {
+  streamGameEvents(username: string, gameId: string) {
     this.username = username
+    this.gameId = gameId
     const observable = Observable.create(
       observer => {
         observer.next = event => {

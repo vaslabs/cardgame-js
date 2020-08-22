@@ -27,7 +27,7 @@ export class AllCardsViewComponent implements OnInit {
     this._bottomSheetRef.dismiss();
 
     this.playerService.action(
-      {RecoverCard: {player: this.data.playerId, cardId: cardId}}, this.data.gameId
+      {RecoverCard: {player: this.data.playerId, cardId: cardId}}
     )
   }
 

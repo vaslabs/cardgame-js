@@ -101,6 +101,6 @@ export class HandComponent implements OnInit{
 
    shuffleHand() {
      const action = {ShuffleHand: {player: this.playerId}}
-     this.playerService.action(action, this.gameId)
+     this.playerService.action(action)
    }
 }

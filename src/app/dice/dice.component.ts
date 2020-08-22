@@ -41,10 +41,7 @@ export class DiceComponent implements OnInit {
 
   throw() {
     const action = {ThrowDice: {player: this.localplayer, numberOfDice: this.numberOfDice, sides: this.sides}}
-    this.playerService.action(
-      action, 
-      this.gameId
-    )
+    this.playerService.action(action)
   }
 
 }

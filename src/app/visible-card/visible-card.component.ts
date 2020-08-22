@@ -50,7 +50,7 @@ export class VisibleCardComponent implements OnInit {
   play() {
     if (this.cardId != "" && this.playerId != "" && this.gameId != "") {
       const action = {PlayCard: {card: this.cardId, player: this.playerId}}
-      this.playerService.action(action, this.gameId)
+      this.playerService.action(action)
     } else {
       console.log("Card id is empty")
     }
@@ -58,12 +58,12 @@ export class VisibleCardComponent implements OnInit {
 
   returnToDeck() {
     const action = {ReturnCard: {player: this.playerId, cardId: this.cardId}}
-    this.playerService.action(action, this.gameId)
+    this.playerService.action(action)
   }
 
   putBackToDeck(card: any, position: number) {
     const action = {PutCardBack: {card: card, player: this.playerId, index: position}}
-    this.playerService.action(action, this.gameId)
+    this.playerService.action(action)
   }
 
   openDialog(): void {

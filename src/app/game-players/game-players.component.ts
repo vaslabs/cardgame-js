@@ -107,12 +107,12 @@ export class GamePlayersComponent implements OnInit {
   }
 
   chooseNext(next: string) {
-    this.playerService.action({ChooseNextPlayer: {player: this.localplayer, next: next}}, this.gameId)
+    this.playerService.action({ChooseNextPlayer: {player: this.localplayer, next: next}})
   }
 
   steal(from: string, index: number) {
     console.log('Wants to steal ' + index + " from " + from);
-    this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}}, this.gameId)
+    this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}})
   }
 
   openDialog(from: string): void {
@@ -127,7 +127,7 @@ export class GamePlayersComponent implements OnInit {
   }
 
   kill(player: string): void {
-    this.playerService.action({Leave: {player: player}}, this.gameId)
+    this.playerService.action({Leave: {player: player}})
   }
 
   private removePlayer(id: string, nextPlayer: number) {

@@ -15,7 +15,7 @@ export class GameEventsComponent implements OnInit {
       (msg: any) =>
          {
            if (msg.GameConfiguration) {
-             this.startEvents(msg.GameConfiguration.username)
+             this.startEvents(msg.GameConfiguration.username, msg.GameConfiguration.id)
            }
          }
     )
@@ -23,8 +23,8 @@ export class GameEventsComponent implements OnInit {
 
   events = [];
 
-  startEvents(username: string): void {
-    this._eventsService.streamGameEvents(username)
+  startEvents(username: string, gameId: string): void {
+    this._eventsService.streamGameEvents(username, gameId)
       .subscribe((event) => {
           this.events.push(event)
       }

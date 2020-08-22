@@ -70,7 +70,7 @@ export class GameBoardComponent implements OnInit {
   streamEvents() {
     
     if (this.server != "") {
-      this.eventsService.streamGameEvents(this.userId)
+      this.eventsService.streamGameEvents(this.userId, this.gameId)
         .subscribe(
           (event: MessageEvent) => {
             const gameEvent = JSON.parse(event.data)

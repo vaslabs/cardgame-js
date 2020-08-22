@@ -45,7 +45,7 @@ export class PlayerService {
     return this.http.get(uri)
   }
 
-  action(action: any, gameId: string) {
+  action(action: any) {
     
     if (this.username) {
       action.vectorClock = this.vectorClock.tick(this.username)
