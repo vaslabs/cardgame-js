@@ -58,15 +58,6 @@ export class GameBoardComponent implements OnInit {
 
   gameConfiguration = {}
 
-  private removeTrailingSlash(server: string): string {
-    const slash = server.lastIndexOf('/')
-    if (slash  == server.length - 1) {
-      return server.substring(0, slash)
-    } else {
-      return server
-    }
-  }
-
   streamEvents() {
     
     if (this.server != "") {
@@ -74,9 +65,9 @@ export class GameBoardComponent implements OnInit {
         .subscribe(
           (event: MessageEvent) => {
             const gameEvent = JSON.parse(event.data)
-              if (gameEvent.GameStarted) {
+            if (gameEvent.GameStarted) {
                 this.loadGame()
-              } else {
+            } else {
                 this.openSnackBar(gameEvent)
               }
             }
