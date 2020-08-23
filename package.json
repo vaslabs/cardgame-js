@@ -23,7 +23,7 @@
     "@angular/router": "~10.0.8",
     "angular-cli-ghpages": "^0.6.2",
     "ngx-cookie-service": "^10.0.1",
-    "rxjs": "~6.6.2",
+    "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

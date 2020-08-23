@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class VectorClockService {
 
   vectorClock: { [key:string]:number; } = {}
-  serverClock: number = 0
+  serverClock: { [key:string]:number; } = {}
 
 
   constructor(private cookieService: CookieService) {
@@ -19,11 +19,11 @@ export class VectorClockService {
       this.vectorClock[me]++
     else
       this.vectorClock[me] = 1
-    this.persist()
+    this.persistVectorClock()
     return this.vectorClock
   }
 
-  tickClocks(me: string, clocks: { [key:string]:number; }, serverClock: number): { [key:string]:number; } {
+  tickClocks(me: string, clocks: { [key:string]:number; }, serverClock: number, gameId: string): { [key:string]:number; } {
     Object.keys(clocks).forEach(key => {
       if (this.vectorClock[key] >= 0) {
         const value = this.vectorClock[key]
@@ -32,23 +32,34 @@ export class VectorClockService {
         this.vectorClock[key] = clocks[key]
       }
     });
-    this.serverClock = Math.max(this.serverClock, serverClock)
+    if (!this.serverClock[gameId]) {
+      this.serverClock[gameId] = 0
+    }
+    this.serverClock[gameId] = Math.max(this.serverClock[gameId], serverClock)
     this.tick(me)
-    this.persist()
+    this.persist(gameId)
     return this.vectorClock
   }
 
-  persist() {
+  persistVectorClock() {
     this.cookieService.set("vector-clock", JSON.stringify(this.vectorClock))
-    this.cookieService.set("server-clock", this.serverClock.toString())
+  }
+
+  persist(gameId: string) {
+    this.persistVectorClock()
+    if (!this.serverClock[gameId])
+      this.serverClock[gameId] = 0
+    this.cookieService.set(`server-clock-${gameId}`, this.serverClock[gameId].toString())
+
   }
 
   recover() {
+    const gameId = this.cookieService.get("game-id") 
     const vectorClock: string = this.cookieService.get("vector-clock")
-    const serverClock: string = this.cookieService.get("server-clock")
+    const serverClock: string = this.cookieService.get(`server-clock-${gameId}`)
     if (vectorClock)
       this.vectorClock = JSON.parse(vectorClock)
     if (serverClock)
-      this.serverClock = parseInt(serverClock)
+      this.serverClock[gameId] = parseInt(serverClock) | 0
   }
 }

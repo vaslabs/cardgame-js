@@ -15,7 +15,7 @@ export class GameEventsComponent implements OnInit {
       (msg: any) =>
          {
            if (msg.GameConfiguration) {
-             this.startEvents(msg.GameConfiguration.server, msg.GameConfiguration.id)
+             this.startEvents(msg.GameConfiguration.username, msg.GameConfiguration.id)
            }
          }
     )
@@ -23,11 +23,10 @@ export class GameEventsComponent implements OnInit {
 
   events = [];
 
-  startEvents(server: string, gameId: string): void {
-    this._eventsService.getGameEvent(server + "/events/vaslabs", "vaslabs")
-      .subscribe((data: MessageEvent) => {
-        if (data.data != "")
-          this.events.push(data.data)
+  startEvents(username: string, gameId: string): void {
+    this._eventsService.streamGameEvents(username, gameId)
+      .subscribe((event) => {
+          this.events.push(event)
       }
     );
   }

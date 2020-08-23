@@ -16,6 +16,19 @@ export class GameBoardComponent implements OnInit {
   constructor(private playerService: PlayerService, private eventsService: EventsService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.eventsService.currentMessage.subscribe(
+      (msg: any) => {
+        if (msg.GameConfiguration) {
+          this.gameId = msg.GameConfiguration.id
+          this.userId = msg.GameConfiguration.username
+          this.server = msg.GameConfiguration.server
+        } else if (msg.GameStarted) {
+          this.loadGame()
+        } else {
+          this.openSnackBar(msg)
+        }
+      }
+    )
   }
 
   gameId = ""
@@ -24,19 +37,6 @@ export class GameBoardComponent implements OnInit {
 
   @ViewChild(JoinComponent) joinComponent;
   @ViewChild(DeckComponent) deckComponent;
-
-  ngAfterViewInit() {
-    this.eventsService.currentMessage.subscribe(
-      (msg: any) => {
-        if (msg.GameConfiguration) {
-          this.gameId = msg.GameConfiguration.id
-          this.userId = msg.GameConfiguration.username
-          this.server = msg.GameConfiguration.server
-          this.streamEvents();
-        }
-      }
-    )
-  }
 
   showJoin(): boolean {
     return this.gameId == ""
@@ -57,34 +57,6 @@ export class GameBoardComponent implements OnInit {
   }
 
   gameConfiguration = {}
-
-  private removeTrailingSlash(server: string): string {
-    const slash = server.lastIndexOf('/')
-    if (slash  == server.length - 1) {
-      return server.substring(0, slash)
-    } else {
-      return server
-    }
-  }
-
-  streamEvents() {
-    
-    if (this.server != "") {
-      this.eventsService.getGameEvent(this.removeTrailingSlash(this.server) + "/events/" + this.userId, this.userId)
-        .subscribe(
-          (data: MessageEvent) => {
-            if (data.data != "") {
-              const gameEvent = JSON.parse(data.data)
-              if (gameEvent.GameStarted) {
-                this.loadGame()
-              } else {
-                this.openSnackBar(gameEvent)
-              }
-            }
-          }
-        )
-    }
-  }
 
   private durationInSeconds = 5
 

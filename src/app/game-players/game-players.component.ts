@@ -82,6 +82,8 @@ export class GamePlayersComponent implements OnInit {
           this.setHasTurn(event.GameStarted.startingPlayer)
         } else if (event.PlayerLeft) {
           this.removePlayer(event.PlayerLeft.player, event.PlayerLeft.nextCurrentPlayer)
+        } else if (event.MoveCard && event.MoveCard.card.VisibleCard) {
+          this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: event.MoveCard.card}})
         }
       }
 
@@ -105,22 +107,12 @@ export class GamePlayersComponent implements OnInit {
   }
 
   chooseNext(next: string) {
-    this.playerService.action({ChooseNextPlayer: {player: this.localplayer, next: next}}, this.gameId)
-      .subscribe(
-        (event: {NextPlayer: {player: string}}) =>
-          this.setHasTurn(event.NextPlayer.player)
-      )
+    this.playerService.action({ChooseNextPlayer: {player: this.localplayer, next: next}})
   }
 
   steal(from: string, index: number) {
     console.log('Wants to steal ' + index + " from " + from);
-    this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}}, this.gameId).subscribe(
-      (msg: any) => {
-        if (msg.MoveCard.card.VisibleCard) {
-          this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: msg.MoveCard.card}})
-        }
-      }
-    )
+    this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}})
   }
 
   openDialog(from: string): void {
@@ -135,17 +127,12 @@ export class GamePlayersComponent implements OnInit {
   }
 
   kill(player: string): void {
-    this.playerService.action({Leave: {player: player}}, this.gameId).subscribe(
-      (msg: any) => {
-        console.log("Leaving the game")
-      }
-    )
+    this.playerService.action({Leave: {player: player}})
   }
 
   private removePlayer(id: string, nextPlayer: number) {
     this.players = this.players.filter(p => p.id != id)
     this.setHasTurn(this.players[nextPlayer].id)
-  
   }
 
 }

@@ -1,24 +1,26 @@
 import { Injectable, NgZone } from '@angular/core';
-import {SseService} from './sse.service'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { VectorClockService } from './vector-clock.service';
-import { tick } from '@angular/core/testing';
+import { WebsocketService } from './websocket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  constructor(
-    private _zone: NgZone, 
-    private _sseService: SseService,
-    private vectorClock: VectorClockService
-  ) { }
-
   defaultMessage: any = {}
   private messageSource = new BehaviorSubject(this.defaultMessage);
-  currentMessage = this.messageSource.asObservable();
+  currentMessage: Observable<any> = this.messageSource.asObservable();
   username = null;
+  gameId = null;
+
+  constructor(
+    private _zone: NgZone, 
+    private websocketService: WebsocketService,
+    private vectorClock: VectorClockService
+  ) { 
+  }
+
 
   emitLocalEvent(event: any) {
     this.messageSource.next(event)
@@ -30,33 +32,34 @@ export class EventsService {
       if (this.isFutureEvent(gameEvent)) {
         this.messageSource.next(gameEvent)
       }
-      this.vectorClock.tickClocks(this.username, gameEvent.vectorClock, gameEvent.serverClock)
+      this.vectorClock.tickClocks(this.username, gameEvent.vectorClock, gameEvent.serverClock, this.gameId)
     }
   }
 
   isFutureEvent(event): boolean {
-    return event.serverClock > this.vectorClock.serverClock
+    return event.serverClock > this.vectorClock.serverClock[this.gameId]
   }
 
-  getGameEvent(url: string, username) {
+  streamGameEvents(username: string, gameId: string): Observable<any> {
     this.username = username
-    return Observable.create(
+    this.gameId = gameId
+    const observable = Observable.create(
       observer => {
-        const eventSource = this._sseService.getEventSource(url);
-        
-        eventSource.onmessage = event => {
+        observer.next = event => {
           this._zone.run(() => {
             this.emitRemoteEvent(event)
-            observer.next(event)
           });
         };
 
-        eventSource.onerror = error => {
+        observer.onerror = error => {
           this._zone.run( () => {
             observer.error(error)
           });
         };
+        this.websocketService.subject.subscribe(observer);
+       
       }
     )
+    return observable
   }
 }
