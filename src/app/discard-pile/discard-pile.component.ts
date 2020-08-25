@@ -45,6 +45,9 @@ export class DiscardPileComponent implements OnInit {
             this.removeCard(card.HiddenCard.id)
         } else if (msg.Layout) {
             this.layout.grid = msg.Layout.gatheringPile
+        } else if (msg.AddedToPile) {
+            const takenCardIds = msg.AddedToPile.cards.map(c => c.id)
+            this.cards = this.cards.filter(c => !takenCardIds.includes(c.id))
         }
       }
     )
@@ -83,7 +86,7 @@ export class DiscardPileComponent implements OnInit {
 
   grabAll() {
     const grab = this.grabbingCards.map(c => c.id);
-    this.cards = this.cards.concat(grab)
+    this.cards = this.cards.concat(this.grabbingCards)
     this.grabbingCards = [];
     this.playerService.action({GrabCards:{player: this.playerId, cards: grab}})
   }
