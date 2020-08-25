@@ -47,11 +47,14 @@ export class GameBoardComponent implements OnInit {
     this.playerService.recoverGame(this.server, this.gameId, this.userId)
       .subscribe(
         (data: any) => {
-          this.deckComponent.setDeck(data.StartedGame.deck)
-          this.deckComponent.localplayer = this.userId;
-          this.deckComponent.gameId = this.gameId;
-          this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}};
-          this.eventsService.emitLocalEvent(this.gameConfiguration);
+          if (data.StartedGame) {
+            const startedGame = data.StartedGame
+            this.deckComponent.setDeck(startedGame.deck)
+            this.deckComponent.localplayer = this.userId;
+            this.deckComponent.gameId = this.gameId;
+            this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}};
+            this.eventsService.emitLocalEvent(this.gameConfiguration);
+          }
         }
       )
   }

@@ -1,9 +1,9 @@
-<div class="grid-container">
+<div class="grid-container" *ngIf="!layout.grid">
     <div class="grid-item">
         <app-dice></app-dice>
     </div>
     <div class="grid-item">
-        <mat-card class="deck-top-card">
+        <mat-card class="deck-top-card" >
             <img mat-card-image [src]="lastPlayed.image" alt="discard pile">
             <mat-card-content>
                 <button mat-mini-fab aria-label="Look cards" (click)="openBottomSheet()">
@@ -13,3 +13,18 @@
         </mat-card>
     </div>
 </div>
+
+<div class="grid-container" *ngIf="layout.grid">
+    <div class="grid-item throwing-pile" *ngFor="let card of cards" (dblclick)="grab(card)"> 
+        <img [src]="card.image">
+    </div>
+</div>
+
+
+<button mat-mini-fab *ngIf="grabbingCards.length > 0" (click)="grabAll()">
+    <mat-icon>thumb_up</mat-icon>
+</button>
+
+<button mat-mini-fab *ngIf="grabbingCards.length > 0" (click)="cancelGrab()">
+    <mat-icon>thumb_down</mat-icon>
+</button>

@@ -55,6 +55,7 @@ export class GamePlayersComponent implements OnInit {
                         this.setHasTurn(p.id)
                       }
                       if (p.id == this.localplayer) {
+                        this.configureGame(p)
                         this.eventService.emitLocalEvent({RecoverHand: p.hand})
                       }
                     }
@@ -102,16 +103,25 @@ export class GamePlayersComponent implements OnInit {
     if (!this.playerById[playerId]) {
       const player = {id: playerId, hasTurn: false}
       this.players.push(player)
-      this.playerById[playerId] = true
+      this.playerById[playerId]
     }
   }
 
+  private configureGame(p: any) {
+    const gameLayoutConfiguration = {Layout:{gatheringPile: false, showPoints: false}}
+    const gatheringPile = p.gatheringPile
+    if (gatheringPile.HiddenPile) {
+      gameLayoutConfiguration.Layout.gatheringPile = true
+      gameLayoutConfiguration.Layout.showPoints = true
+    }
+    this.eventService.emitLocalEvent(gameLayoutConfiguration)
+  }
+ 
   chooseNext(next: string) {
     this.playerService.action({ChooseNextPlayer: {player: this.localplayer, next: next}})
   }
 
   steal(from: string, index: number) {
-    console.log('Wants to steal ' + index + " from " + from);
     this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}})
   }
 

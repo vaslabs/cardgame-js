@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../events.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AllCardsViewComponent, DiscardPileData } from './all-cards-view/all-cards-view.component';
+import { PlayerService } from '../player.service';
 @Component({
   selector: 'app-discard-pile',
   templateUrl: './discard-pile.component.html',
@@ -17,7 +18,13 @@ export class DiscardPileComponent implements OnInit {
   private hiddenCard = { id: "0", image: "assets/img/hidden_card.jpg"}
   lastPlayed = this.hiddenCard
 
-  constructor(private eventService: EventsService, private _bottomSheet: MatBottomSheet) { }
+  layout = {
+    grid: false
+  }
+
+  grabbingCards = []
+
+  constructor(private eventService: EventsService, private _bottomSheet: MatBottomSheet, private playerService: PlayerService) { }
 
   ngOnInit(): void {
     this.eventService.currentMessage.subscribe(
@@ -36,6 +43,8 @@ export class DiscardPileComponent implements OnInit {
             this.removeCard(card.VisibleCard.id)
           else if (card.HiddenCard) 
             this.removeCard(card.HiddenCard.id)
+        } else if (msg.Layout) {
+            this.layout.grid = msg.Layout.gatheringPile
         }
       }
     )
@@ -60,6 +69,23 @@ export class DiscardPileComponent implements OnInit {
       if (this.cards.length > 0)
         this.lastPlayed = this.cards[this.cards.length - 1]
     }
+  }
+
+  grab(card) {
+    this.grabbingCards.push(card)
+    this.cards = this.cards.filter(c => c.id != card.id)
+  }
+
+  cancelGrab() {
+    this.cards = this.cards.concat(this.grabbingCards)
+    this.grabbingCards = [];
+  }
+
+  grabAll() {
+    const grab = this.grabbingCards.map(c => c.id);
+    this.cards = this.cards.concat(grab)
+    this.grabbingCards = [];
+    this.playerService.action({GrabCards:{player: this.playerId, cards: grab}})
   }
 
 }
