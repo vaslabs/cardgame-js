@@ -48,15 +48,20 @@ export class GameBoardComponent implements OnInit {
       .subscribe(
         (data: any) => {
           if (data.StartedGame) {
-            const startedGame = data.StartedGame
-            this.deckComponent.setDeck(startedGame.deck)
-            this.deckComponent.localplayer = this.userId;
-            this.deckComponent.gameId = this.gameId;
-            this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}};
-            this.eventsService.emitLocalEvent(this.gameConfiguration);
+            this.startedGame(data.StartedGame)
+          } else if (data.GameRestarted) {
+            this.startedGame(data.GameRestarted.StartedGame)
           }
         }
       )
+  }
+
+  startedGame(startedGame: any) {
+    this.deckComponent.setDeck(startedGame.deck)
+    this.deckComponent.localplayer = this.userId;
+    this.deckComponent.gameId = this.gameId;
+    this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}};
+    this.eventsService.emitLocalEvent(this.gameConfiguration);
   }
 
   gameConfiguration = {}

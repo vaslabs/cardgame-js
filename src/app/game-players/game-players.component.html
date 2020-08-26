@@ -2,7 +2,7 @@
     <mat-list-item role="listitem" style="min-height: 50px;">
         <div mat-line [class]="player.hasTurn ? 'hasTurn' : 'noTurn'" >
             <div class="scroll-container">
-                {{ player.id }}
+                {{ player.id }} {{player.points}}
                 <button *ngIf="!player.hasTurn && gameStarted" mat-flat-button color="primary" (click)="chooseNext(player.id)">Select Next</button>
                 <button *ngIf="gameStarted && player.id != localplayer && !player.hasTurn" mat-flat-button color="warn" (click)="openDialog(player.id)">Steal card</button>
                 <button *ngIf="player.id == localplayer" color="warn" mat-icon-button (click)="kill(player.id)"><mat-icon>thumb_down_alt</mat-icon></button>
@@ -12,3 +12,7 @@
     <mat-divider></mat-divider>
    
   </mat-list>
+<br><br>
+<button mat-button color="warn" (click)="restartGame()">
+    Restart
+</button>

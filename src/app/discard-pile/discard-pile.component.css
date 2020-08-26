@@ -18,6 +18,11 @@ mat-content p {
     width: 5rem;
 }
 
+.grabbing-cards img {
+    height: 4rem;
+    width: 2.5rem;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
