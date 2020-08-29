@@ -39,6 +39,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SetupGameComponent } from './setup-game/setup-game.component';
 import { DiceComponent } from './dice/dice.component';
 import { ViewCardComponent } from './visible-card/view-card/view-card.component';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { ViewCardComponent } from './visible-card/view-card/view-card.component'
     MatInputModule,
     MatBottomSheetModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBadgeModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

@@ -24,6 +24,10 @@ export class GamePlayersComponent implements OnInit {
   localplayer = ""
   gameStarted = false
   server = ""
+  gameLayout = {
+    canSteal: true,
+    showPoints: false
+  }
 
   ngOnInit(): void {
     this.eventService.currentMessage.subscribe(
@@ -57,7 +61,7 @@ export class GamePlayersComponent implements OnInit {
         } else if (event.MoveCard && event.MoveCard.card.VisibleCard) {
           this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: event.MoveCard.card}})
         } else if (event.GameRestarted) {
-          this.startedGame(event.GameRestarted.StartedGame)
+          this.startedGame(event.GameRestarted.startedGame)
         }
       }
 
@@ -116,6 +120,8 @@ export class GamePlayersComponent implements OnInit {
     if (gatheringPile.HiddenPile) {
       gameLayoutConfiguration.Layout.gatheringPile = true
       gameLayoutConfiguration.Layout.showPoints = true
+      this.gameLayout.canSteal = false
+      this.gameLayout.showPoints = true
     }
     this.eventService.emitLocalEvent(gameLayoutConfiguration)
   }

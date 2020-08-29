@@ -5,12 +5,14 @@
 .scroll-container {
     overflow-x: auto;
     max-width: 300px;
-}
-  
-.hasTurn {
-  background-color: lightgreen;
+} 
+
+
+mat-list-item {
+  min-height: 50px;
+  margin-top: 10px;
 }
 
-.noTurn {
-  background-color: transparent;
+button {
+  margin-top: 11px;
 }
