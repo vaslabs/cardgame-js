@@ -31,7 +31,7 @@ export class GamePlayersComponent implements OnInit {
         if (event.NextPlayer) {
           this.setHasTurn(event.NextPlayer.player)
         } if (event.PlayerJoined) {
-          this.storePlayer(event.PlayerJoined.id)
+          this.storePlayer(event.PlayerJoined.id, 0)
         } else if (event.GameConfiguration) {
           this.gameId = event.GameConfiguration.id
           this.localplayer = event.GameConfiguration.username
@@ -42,41 +42,13 @@ export class GamePlayersComponent implements OnInit {
                 if (res.StartingGame) {
                   this.players = []
                   this.playerById = {}
-                  res.StartingGame.playersJoined.forEach(p => this.storePlayer(p.id))
+                  res.StartingGame.playersJoined.forEach(p => this.storePlayer(p.id, 0))
                   this.gameStarted = false
                 } else if (res.StartedGame) {
-                  this.players = []
-                  this.playerById = {}
-                  this.gameStarted = true
-                  const currentPlayer = res.StartedGame.nextPlayer
-                  res.StartedGame.players.forEach((p, index) => {
-                      this.storePlayer(p.id)
-                      if (index == currentPlayer) {
-                        this.setHasTurn(p.id)
-                      }
-                      if (p.id == this.localplayer) {
-                        this.eventService.emitLocalEvent({RecoverHand: p.hand})
-                      }
-                    }
-                  );
-                  this.eventService.emitLocalEvent(
-                    {RecoverDiscardPile:{cards: res.StartedGame.discardPile.cards}}
-                  );
-
-                  this.eventService.emitLocalEvent(
-                    {RecoverDeck: {deck: res.StartedGame.deck}}
-                  );
-
-                  const borrowed = res.StartedGame.deck.borrowed
-                  if (borrowed && borrowed.playerId == this.localplayer) {
-                    this.eventService.emitLocalEvent({RecoverBorrow: borrowed.cards})
-                  }
-
-
+                  this.startedGame(res.StartedGame)
                 }
               }
             )
-          this.storePlayer(this.localplayer)
         } else if (event.GameStarted) {
           this.gameStarted = true
           this.setHasTurn(event.GameStarted.startingPlayer)
@@ -84,6 +56,8 @@ export class GamePlayersComponent implements OnInit {
           this.removePlayer(event.PlayerLeft.player, event.PlayerLeft.nextCurrentPlayer)
         } else if (event.MoveCard && event.MoveCard.card.VisibleCard) {
           this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: event.MoveCard.card}})
+        } else if (event.GameRestarted) {
+          this.startedGame(event.GameRestarted.StartedGame)
         }
       }
 
@@ -98,20 +72,59 @@ export class GamePlayersComponent implements OnInit {
     }
   }
 
-  private storePlayer(playerId: string) {
+  private storePlayer(playerId: string, points: number) {
     if (!this.playerById[playerId]) {
-      const player = {id: playerId, hasTurn: false}
+      const player = {id: playerId, hasTurn: false, points: points}
       this.players.push(player)
-      this.playerById[playerId] = true
+      this.playerById[playerId]
     }
   }
 
+  private startedGame(startedGame: any) {
+    this.players = []
+    this.playerById = {}
+    this.gameStarted = true
+    const currentPlayer = startedGame.nextPlayer
+    startedGame.players.forEach((p, index) => {
+        this.storePlayer(p.id, p.points)
+        if (index == currentPlayer) {
+          this.setHasTurn(p.id)
+        }
+        if (p.id == this.localplayer) {
+          this.configureGame(p)
+          this.eventService.emitLocalEvent({RecoverHand: p.hand})
+        }
+      }
+    );
+    this.eventService.emitLocalEvent(
+      {RecoverDiscardPile:{cards: startedGame.discardPile.cards}}
+    );
+
+    this.eventService.emitLocalEvent(
+      {RecoverDeck: {deck: startedGame.deck}}
+    );
+
+    const borrowed = startedGame.deck.borrowed
+    if (borrowed && borrowed.playerId == this.localplayer) {
+      this.eventService.emitLocalEvent({RecoverBorrow: borrowed.cards})
+    }
+  }
+
+  private configureGame(p: any) {
+    const gameLayoutConfiguration = {Layout:{gatheringPile: false, showPoints: false}}
+    const gatheringPile = p.gatheringPile
+    if (gatheringPile.HiddenPile) {
+      gameLayoutConfiguration.Layout.gatheringPile = true
+      gameLayoutConfiguration.Layout.showPoints = true
+    }
+    this.eventService.emitLocalEvent(gameLayoutConfiguration)
+  }
+ 
   chooseNext(next: string) {
     this.playerService.action({ChooseNextPlayer: {player: this.localplayer, next: next}})
   }
 
   steal(from: string, index: number) {
-    console.log('Wants to steal ' + index + " from " + from);
     this.playerService.action({StealCard: {player: this.localplayer, from: from, cardIndex: index}})
   }
 
@@ -128,6 +141,11 @@ export class GamePlayersComponent implements OnInit {
 
   kill(player: string): void {
     this.playerService.action({Leave: {player: player}})
+  }
+
+  restartGame() {
+    console.log("Restarting game")
+    this.playerService.action({RestartGame:{player: this.localplayer}})
   }
 
   private removePlayer(id: string, nextPlayer: number) {
