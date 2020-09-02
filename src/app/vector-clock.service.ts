@@ -25,9 +25,9 @@ export class VectorClockService {
 
   tickClocks(me: string, clocks: { [key:string]:number; }, serverClock: number, gameId: string): { [key:string]:number; } {
     Object.keys(clocks).forEach(key => {
-      if (this.vectorClock[key] >= 0) {
-        const value = this.vectorClock[key]
-        this.vectorClock[key] = Math.max(clocks[key], value)
+      if (this.vectorClock[key] >= 0 && clocks[key] >= 0) {
+          const value = this.vectorClock[key]
+          this.vectorClock[key] = Math.max(clocks[key], value)
       } else {
         this.vectorClock[key] = clocks[key]
       }

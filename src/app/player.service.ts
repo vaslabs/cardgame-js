@@ -24,7 +24,7 @@ export class PlayerService {
     this.authority = server;
     const uri = this.authority + "/game/" + gameId + "/join?username=" + username
     this.username = username
-    this.vectorClock.tick(username)
+    this.vectorClock.tickClocks(username, {}, 0, gameId)
     this.connectToPlayingEvents(server, gameId, username)
     return this.http.post(uri, {})
   }
