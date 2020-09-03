@@ -32,7 +32,7 @@ export class DiscardPileComponent implements OnInit {
         if (msg.PlayedCard) {
           this.updateCard(msg.PlayedCard.card)
         } else if (msg.RecoverDiscardPile) {
-          this.cards = [];
+          this.clearDiscardPile()
           msg.RecoverDiscardPile.cards.forEach(c => this.updateCard(c.VisibleCard))
         } else if (msg.GameConfiguration) {
           this.playerId = msg.GameConfiguration.username
@@ -46,8 +46,12 @@ export class DiscardPileComponent implements OnInit {
         } else if (msg.Layout) {
             this.layout.grid = msg.Layout.gatheringPile
         } else if (msg.AddedToPile) {
-            const takenCardIds = msg.AddedToPile.cards.map(c => c.id)
-            this.cards = this.cards.filter(c => !takenCardIds.includes(c.id))
+          const takenCardIds = msg.AddedToPile.cards.map(c => c.id)
+          this.cards = this.cards.filter(c => !takenCardIds.includes(c.id))
+          takenCardIds.forEach(cardId => {
+            this.cardById[cardId] = false
+          });
+            
         }
       }
     )
@@ -55,6 +59,12 @@ export class DiscardPileComponent implements OnInit {
 
   openBottomSheet(): void {
     this._bottomSheet.open(AllCardsViewComponent, {data: {cards: this.cards, playerId: this.playerId, gameId: this.gameId}});
+  }
+
+  private clearDiscardPile() {
+    this.cards = [];
+    this.cardById = {};
+    this.lastPlayed = this.hiddenCard
   }
 
   updateCard(card: any) {
@@ -71,6 +81,8 @@ export class DiscardPileComponent implements OnInit {
       this.cardById[cardId] = false
       if (this.cards.length > 0)
         this.lastPlayed = this.cards[this.cards.length - 1]
+      else
+        this.lastPlayed = this.hiddenCard
     }
   }
 
