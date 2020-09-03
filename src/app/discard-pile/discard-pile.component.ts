@@ -15,7 +15,7 @@ export class DiscardPileComponent implements OnInit {
   private playerId = ""
   private gameId = ""
 
-  private hiddenCard = { id: "0", image: "assets/img/hidden_card.jpg"}
+  hiddenCard = { id: "0", image: "assets/img/hidden_card.jpg"}
   lastPlayed = this.hiddenCard
 
   layout = {
