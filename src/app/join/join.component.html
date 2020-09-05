@@ -1,23 +1,17 @@
 <div class="join-form">
   <mat-form-field>
     <mat-label>Game id: </mat-label>
-    <mat-autocomplete #auto="matAutocomplete">  
       <input #gameid matInput placeholder="game code from admin" [(ngModel)]="inputGameId">
-    </mat-autocomplete>
   </mat-form-field>
   <br>
   <mat-form-field>
     <mat-label>User id: </mat-label>
-    <mat-autocomplete #auto="matAutocomplete">  
       <input #userid matInput placeholder="username" [(ngModel)]="inputUserId">
-    </mat-autocomplete>
   </mat-form-field>
   <br>
   <mat-form-field>
     <mat-label>Server: </mat-label>
-    <mat-autocomplete #auto="matAutocomplete">
       <input #server matInput placeholder="server" [(ngModel)]="inputServer">
-    </mat-autocomplete>
   </mat-form-field>
   <br>
   <button mat-flat-button color="primary" (click)="joinGame()">Join</button>
