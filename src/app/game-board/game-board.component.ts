@@ -5,6 +5,7 @@ import { EventsService } from '../events.service';
 import { DeckComponent } from '../deck/deck.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EventShowerComponent } from './event-shower/event-shower.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game-board',
@@ -13,7 +14,7 @@ import { EventShowerComponent } from './event-shower/event-shower.component';
 })
 export class GameBoardComponent implements OnInit {
 
-  constructor(private playerService: PlayerService, private eventsService: EventsService, private _snackBar: MatSnackBar) { }
+  constructor(private playerService: PlayerService, private eventsService: EventsService, private _snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
     this.eventsService.currentMessage.subscribe(
@@ -29,6 +30,9 @@ export class GameBoardComponent implements OnInit {
         }
       }
     )
+    if (this.gameId == "" || this.userId == "" || this.server == "") {
+      this.router.navigateByUrl("/")
+    }
   }
 
   gameId = ""

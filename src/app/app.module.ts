@@ -40,6 +40,7 @@ import { SetupGameComponent } from './setup-game/setup-game.component';
 import { DiceComponent } from './dice/dice.component';
 import { ViewCardComponent } from './visible-card/view-card/view-card.component';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatBottomSheetModule,
     MatIconModule,
     MatSnackBarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatAutocompleteModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

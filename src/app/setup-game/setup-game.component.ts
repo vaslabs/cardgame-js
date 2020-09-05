@@ -23,7 +23,7 @@ export class SetupGameComponent implements OnInit {
           if (username) {
             this.cookieService.set("username", username)
           }
-          this.router.navigateByUrl("/board")
+          this.router.navigateByUrl("/")
         }
       }
     )

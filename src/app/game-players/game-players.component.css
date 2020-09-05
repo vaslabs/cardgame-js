@@ -16,3 +16,11 @@ mat-list-item {
 button {
   margin-top: 11px;
 }
+
+button.quit {
+  margin: 10%;
+}
+
+button.restart {
+  border: 1px solid;
+}
