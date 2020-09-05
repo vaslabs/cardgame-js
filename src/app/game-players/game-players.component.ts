@@ -88,7 +88,7 @@ export class GamePlayersComponent implements OnInit {
     if (!this.playerById[playerId]) {
       const player = {id: playerId, hasTurn: false, points: points}
       this.players.push(player)
-      this.playerById[playerId]
+      this.playerById[playerId] = player;
     }
   }
 
