@@ -1,0 +1,8 @@
+.join-form {
+    border:2px;
+    border-color: aqua;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}

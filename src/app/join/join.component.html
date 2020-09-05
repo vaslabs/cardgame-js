@@ -1,23 +1,18 @@
-<mat-grid-list cols="6" rowHeight="5rem">
-  <mat-grid-tile [colspan]="2" [rowspan]="1">
-    <mat-form-field>
-      <mat-label>Game id: </mat-label>
+<div class="join-form">
+  <mat-form-field>
+    <mat-label>Game id: </mat-label>
       <input #gameid matInput placeholder="game code from admin" [(ngModel)]="inputGameId">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="2" [rowspan]="1">
-    <mat-form-field>
-      <mat-label>User id: </mat-label>
-      <input #userid matInput placeholder="username" [(ngModel)]="inputUserId">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-form-field>
-      <mat-label>Server: </mat-label>
-      <input #server matInput placeholder="server" [(ngModel)]="inputServer">
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <button mat-flat-button color="primary" (click)="joinGame()">Join</button>
-  </mat-grid-tile>
-</mat-grid-list>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>User id: </mat-label>
+    <input #userid matInput placeholder="username" [(ngModel)]="inputUserId">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Server: </mat-label>
+    <input #server matInput placeholder="server" [(ngModel)]="inputServer">
+  </mat-form-field>
+  <br>
+  <button mat-flat-button color="primary" (click)="joinGame()">Join</button>
+</div>

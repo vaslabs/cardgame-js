@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-join',
@@ -10,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class JoinComponent implements OnInit {
 
-  constructor(private playerService: PlayerService, private eventService: EventsService, private cookieService: CookieService) { }
+  constructor(private playerService: PlayerService, private eventService: EventsService, private cookieService: CookieService, private router: Router) { }
 
   gameId = ""
   userId = ""
@@ -29,6 +30,7 @@ export class JoinComponent implements OnInit {
       this.gameId = this.inputGameId
       this.userId = this.inputUserId
       this.server = this.inputServer
+      this.router.navigateByUrl("/board")
       this.eventService.emitLocalEvent({GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}})
     }
   }
@@ -40,7 +42,7 @@ export class JoinComponent implements OnInit {
         this.userId = this.inputUserId
         this.gameId = this.inputGameId
         this.server = this.inputServer
-
+        this.router.navigateByUrl("/board")
         this.eventService.emitLocalEvent({GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}})
         this.cookieService.set("game-id", this.gameId)
         this.cookieService.set("username", this.userId)
@@ -48,8 +50,6 @@ export class JoinComponent implements OnInit {
       }
     )
   }
-
-  @Output() messageEvent = new EventEmitter<any>();
 
 
   updateGameId(id: string) {
