@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { EventsService } from '../events.service';
 import { PlayerService } from '../player.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 export interface DialogData {
   from: string;
@@ -16,7 +18,13 @@ export interface DialogData {
 })
 export class GamePlayersComponent implements OnInit {
 
-  constructor(private eventService: EventsService, private playerService: PlayerService, public dialog: MatDialog) { }
+  constructor(
+    private eventService: EventsService, 
+    private playerService: PlayerService, 
+    public dialog: MatDialog, 
+    private cookieService: CookieService, 
+    private router: Router
+  ) { }
 
   players = []
   private playerById = {}
@@ -152,6 +160,11 @@ export class GamePlayersComponent implements OnInit {
   restartGame() {
     console.log("Restarting game")
     this.playerService.action({RestartGame:{player: this.localplayer}})
+  }
+
+  quitGame() {
+    this.cookieService.deleteAll()
+    this.router.navigateByUrl("/")
   }
 
   private removePlayer(id: string, nextPlayer: number) {

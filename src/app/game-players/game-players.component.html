@@ -1,17 +1,22 @@
-<mat-list role="list" *ngFor="let player of players">
-    <mat-list-item role="listitem">
-        <div mat-line [class]="player.hasTurn ? 'hasTurn' : 'noTurn'" >
-            <div class="scroll-container">
-                <button mat-flat-button color="accent" [disabled]="player.hasTurn" [matBadge]="player.points" matBadgeSize="medium" matBadgeOverlap="true" (click)="chooseNext(player.id)">{{player.id}}</button>
-                <button *ngIf="gameStarted && player.id != localplayer && !player.hasTurn && gameLayout.canSteal" mat-flat-button color="warn" (click)="openDialog(player.id)">Steal card</button>
-                <button *ngIf="player.id == localplayer" color="warn" mat-icon-button (click)="kill(player.id)"><mat-icon>thumb_down_alt</mat-icon></button>
+<div>
+    <mat-list role="list" *ngFor="let player of players">
+        <mat-list-item role="listitem">
+            <div mat-line [class]="player.hasTurn ? 'hasTurn' : 'noTurn'" >
+                <div class="scroll-container">
+                    <button mat-flat-button color="accent" [disabled]="player.hasTurn" [matBadge]="player.points" matBadgeSize="medium" matBadgeOverlap="true" (click)="chooseNext(player.id)">{{player.id}}</button>
+                    <button *ngIf="gameStarted && player.id != localplayer && !player.hasTurn && gameLayout.canSteal" mat-flat-button color="warn" (click)="openDialog(player.id)">Steal card</button>
+                    <button *ngIf="player.id == localplayer" color="warn" mat-icon-button (click)="kill(player.id)"><mat-icon>thumb_down_alt</mat-icon></button>
+                </div>
             </div>
-        </div>
-    </mat-list-item>
-    <mat-divider></mat-divider>
-   
-  </mat-list>
-<br><br>
-<button mat-button color="warn" (click)="restartGame()">
-    Restart
-</button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+    
+    </mat-list>
+    <br><br>
+    <button class="quit" mat-flat-button color="warn" (click)="quitGame()">
+        Quit
+    </button>
+    <button class="restart" mat-button color="orange" (click)="restartGame()">
+        Restart
+    </button>
+</div>

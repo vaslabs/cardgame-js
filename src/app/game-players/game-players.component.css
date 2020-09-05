@@ -16,3 +16,7 @@ mat-list-item {
 button {
   margin-top: 11px;
 }
+
+button.quit {
+  margin: 10%;
+}
