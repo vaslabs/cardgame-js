@@ -20,3 +20,7 @@ button {
 button.quit {
   margin: 10%;
 }
+
+button.restart {
+  border: 1px solid;
+}
