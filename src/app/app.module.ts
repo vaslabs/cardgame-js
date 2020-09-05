@@ -22,7 +22,6 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { VisibleCardComponent } from './visible-card/visible-card.component';
 import { JoinComponent } from './join/join.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {CookieService} from 'ngx-cookie-service'
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -89,7 +88,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatBadgeModule,
     MatAutocompleteModule
   ],
-  providers: [CookieService],
+  providers: [],
   bootstrap: [AppComponent],
   entryComponents: [StealDialog]
 })

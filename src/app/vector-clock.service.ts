@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class VectorClockService {
   serverClock: { [key:string]:number; } = {}
 
 
-  constructor(private cookieService: CookieService) {
+  constructor(private localStorage: LocalStorageService) {
     this.recover()
   }
 
@@ -42,21 +42,21 @@ export class VectorClockService {
   }
 
   persistVectorClock() {
-    this.cookieService.set("vector-clock", JSON.stringify(this.vectorClock))
+    this.localStorage.set("vector-clock", JSON.stringify(this.vectorClock))
   }
 
   persist(gameId: string) {
     this.persistVectorClock()
     if (!this.serverClock[gameId])
       this.serverClock[gameId] = 0
-    this.cookieService.set(`server-clock-${gameId}`, this.serverClock[gameId].toString())
+    this.localStorage.set(`server-clock-${gameId}`, this.serverClock[gameId].toString())
 
   }
 
   recover() {
-    const gameId = this.cookieService.get("game-id") 
-    const vectorClock: string = this.cookieService.get("vector-clock")
-    const serverClock: string = this.cookieService.get(`server-clock-${gameId}`)
+    const gameId = this.localStorage.get("game-id") 
+    const vectorClock: string = this.localStorage.get("vector-clock")
+    const serverClock: string = this.localStorage.get(`server-clock-${gameId}`)
     if (vectorClock)
       this.vectorClock = JSON.parse(vectorClock)
     if (serverClock)

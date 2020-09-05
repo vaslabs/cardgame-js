@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-setup-game',
@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class SetupGameComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private localStorage: LocalStorageService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(
@@ -17,11 +17,11 @@ export class SetupGameComponent implements OnInit {
         const gameId = params["game-id"]
         const server = params["server"]
         if (gameId && server) {
-          this.cookieService.set("game-id", gameId)
-          this.cookieService.set("server", server)
+          this.localStorage.set("game-id", gameId)
+          this.localStorage.set("server", server)
           const username = params["username"] 
           if (username) {
-            this.cookieService.set("username", username)
+            this.localStorage.set("username", username)
           }
           this.router.navigateByUrl("/")
         }
