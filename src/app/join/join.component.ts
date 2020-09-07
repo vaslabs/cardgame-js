@@ -64,5 +64,4 @@ export class JoinComponent implements OnInit {
     this.inputServer = server
   }
 
-
 }

@@ -1,25 +1,31 @@
-<div class="join-form">
-  <mat-card>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+
+  <mat-card class="box">
   <mat-card-header>
     <mat-card-title>Join game</mat-card-title>
   </mat-card-header>
-    <mat-form-field>
+
+
+    <mat-form-field class="example-full-width">
       <mat-label>Game id: </mat-label>
         <input #gameid matInput placeholder="game code from admin" [(ngModel)]="inputGameId">
     </mat-form-field>
     <br>
-    <mat-form-field>
+
+    <mat-form-field class="example-full-width">
       <mat-label>User id: </mat-label>
         <input #userid matInput placeholder="username" [(ngModel)]="inputUserId">
     </mat-form-field>
     <br>
-    <mat-form-field>
+
+    <mat-form-field class="example-full-width">
       <mat-label>Server: </mat-label>
         <input #server matInput placeholder="server" [(ngModel)]="inputServer">
     </mat-form-field>
     <br>
+
     <mat-card-actions>
-      <button mat-flat-button color="primary" (click)="joinGame()">Join</button>
+      <button mat-stroked-button color="accent" class="btn-block" (click)="joinGame()">Join</button>
   </mat-card-actions>
   </mat-card>
 </div>
