@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService } from '../player.service';
 import { EventsService } from '../events.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-join',
@@ -11,7 +11,12 @@ import { Router } from '@angular/router';
 })
 export class JoinComponent implements OnInit {
 
-  constructor(private playerService: PlayerService, private eventService: EventsService, private cookieService: CookieService, private router: Router) { }
+  constructor(
+    private playerService: PlayerService, 
+    private eventService: EventsService, 
+    private localStorage: LocalStorageService, 
+    private router: Router
+  ) { }
 
   gameId = ""
   userId = ""
@@ -22,9 +27,9 @@ export class JoinComponent implements OnInit {
   inputServer = ""
 
   ngOnInit(): void {
-    this.inputGameId = this.cookieService.get("game-id") || ""
-    this.inputUserId = this.cookieService.get("username") || ""
-    this.inputServer = this.cookieService.get("server") || ""
+    this.inputGameId = this.localStorage.get("game-id") || ""
+    this.inputUserId = this.localStorage.get("username") || ""
+    this.inputServer = this.localStorage.get("server") || ""
     if (this.inputGameId != "" && this.inputUserId != "" && this.inputServer != "") {
       console.log("Recovering " + this.inputGameId + ":" + this.inputUserId + ":" + this.inputServer)
       this.gameId = this.inputGameId
@@ -44,9 +49,9 @@ export class JoinComponent implements OnInit {
         this.server = this.inputServer
         this.router.navigateByUrl("/board")
         this.eventService.emitLocalEvent({GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}})
-        this.cookieService.set("game-id", this.gameId)
-        this.cookieService.set("username", this.userId)
-        this.cookieService.set("server", this.server)
+        this.localStorage.set("game-id", this.gameId)
+        this.localStorage.set("username", this.userId)
+        this.localStorage.set("server", this.server)
       }
     )
   }
