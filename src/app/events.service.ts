@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Observer } from 'rxjs';
 import { VectorClockService } from './vector-clock.service';
 import { WebsocketService } from './websocket.service';
 
@@ -20,7 +20,6 @@ export class EventsService {
     private vectorClock: VectorClockService
   ) { 
   }
-
 
   emitLocalEvent(event: any) {
     this.messageSource.next(event)
@@ -43,15 +42,15 @@ export class EventsService {
   streamGameEvents(username: string, gameId: string): Observable<any> {
     this.username = username
     this.gameId = gameId
-    const observable = Observable.create(
-      observer => {
+    const observable = new Observable(
+      (observer: Observer<any>) => {
         observer.next = event => {
           this._zone.run(() => {
             this.emitRemoteEvent(event)
           });
         };
 
-        observer.onerror = error => {
+        observer.error = error => {
           this._zone.run( () => {
             observer.error(error)
           });

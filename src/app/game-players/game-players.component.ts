@@ -164,6 +164,7 @@ export class GamePlayersComponent implements OnInit {
   quitGame() {
     this.localStorage.deleteAll()
     this.router.navigateByUrl("/")
+    window.location.reload();
   }
 
   private removePlayer(id: string, nextPlayer: number) {
