@@ -46,6 +46,8 @@ export class PlayerService {
   }
 
   recoverGame(server: string, gameId: string, username: string) {
+    this.initialiseKeyPair();
+
     this.authority = server
     const uri = server + "/game/" + gameId + "/" + username
     this.username = username
@@ -96,6 +98,7 @@ export class PlayerService {
 
     if (privateKey && publicKey) {
       const keyUtil = Crypto.KEYUTIL.getKeyFromPlainPrivatePKCS8PEM(privateKey)
+      this.keyPair = {privateKey: keyUtil}
       this.publicKeyHeaderValue = publicKey
       return true
     } else {
