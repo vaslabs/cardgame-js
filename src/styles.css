@@ -1,17 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
-  background-image: url("https://images.pexels.com/photos/1422770/pexels-photo-1422770.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  font-family: 'Roboto', sans-serif;
 }
 
 .login-wrapper {
@@ -20,18 +13,19 @@ body {
 
 .positronx {
   text-decoration: none;
-  color: #ffffff;
+  color: #646460;
 }
 
 .box {
+  font-size: 1.5em;
   position: relative;
   top: 0;
   opacity: 1;
   float: left;
-  padding: 60px 50px 40px 50px;
+  padding: 60em 50em 40em 50em;
   width: 100%;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 10em;
   transform: scale(1);
   -webkit-transform: scale(1);
   -ms-transform: scale(1);
@@ -45,7 +39,7 @@ body {
   -ms-transform: scale(.95);
   top: -20px;
   opacity: .8;
-  z-index: -1;
+  z-index: 1;
 }
 
 .box:before {
@@ -54,18 +48,18 @@ body {
   height: 30px;
   border-radius: 10px;
   position: absolute;
-  top: -10px;
-  background: rgba(255, 255, 255, .6);
+  top: -15px;
+  background: rgba(214, 211, 36, 0.6);
   left: 0;
   transform: scale(.95);
   -webkit-transform: scale(.95);
   -ms-transform: scale(.95);
-  z-index: -1;
+  z-index: -5;
 }
 
 .login-wrapper .example-form {
   min-width: 100%;
-  max-width: 300px;
+  max-width: 200px;
   width: 100%;
 }
 
@@ -75,6 +69,7 @@ body {
 }
 
 .login-wrapper mat-card-header {
+  font-family: 'Russo One', sans-serif;
   text-align: center;
   width: 100%;
   display: block;
@@ -82,7 +77,7 @@ body {
 }
 
 .login-wrapper mat-card-header mat-card-title {
-  font-size: 30px;
+  font-size: 50em;
   margin: 0;
 }
 
@@ -91,11 +86,36 @@ body {
 }
 
 .login-wrapper .mat-stroked-button {
-  border: 1px solid currentColor;
+  color:#FF3855;
+  font-family: 'Russo One', sans-serif;
+  font-size: 1.5em;
+  border: 5px solid black;
   line-height: 54px;
-  background: #FFF7FA;
+  background: #ccd1d1;
 }
 
 .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0.8375em 0;
+  font-family: 'Russo One', sans-serif;
+  padding: 0.4em 0;
+}
+
+@media (min-width: 576em) {
+  :root {
+    --size-divisor: 2;
+  }
+}
+@media (min-width: 768em) {
+  :root {
+    --size-divisor: 1.5;
+  }
+}
+@media (min-width: 992em) { 
+  :root {
+    --size-divisor: 1;
+  }
+}
+@media (min-width: 1200em) { 
+  :root {
+    --size-divisor: .67;
+  }
 }

@@ -1,0 +1,9 @@
+
+.login-wrapper {
+    background-image: url("/assets/img/join/background.jpg");
+    background-position: center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    font-family: 'Russo One', sans-serif;
+  }
