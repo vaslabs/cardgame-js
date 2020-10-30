@@ -1,16 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+p {
+  font-family: 'Russo One', sans-serif;
+}
+
+div {
+  display: flex;
+}
 .button-row button,
 .button-row {
-  margin-right: 8px;
-  border: 2px;
-  border-color: black;
+  font-family: 'Russo One', sans-serif;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
 }
+
+.button-row-top {
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
+  font-size: 18px;
+}
+
 mat-card {
+
   color: rgba(4, 4, 4, 0.87);
 }
 mat-content p {
   font-size: 16px;
 }
 img {
+  padding-top: 1em;
   height: 16rem;
   width: 10rem;
+  padding-right: 7rem;
+  padding-left: 0.1rem;
 }
