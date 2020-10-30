@@ -40,6 +40,7 @@ import { DiceComponent } from './dice/dice.component';
 import { ViewCardComponent } from './visible-card/view-card/view-card.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatIconModule,
     MatSnackBarModule,
     MatBadgeModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
