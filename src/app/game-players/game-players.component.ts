@@ -2,9 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { EventsService } from '../events.service';
 import { PlayerService } from '../player.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-
+import { LocalStorageService } from '../local-storage.service';
 export interface DialogData {
   from: string;
   index: number;
@@ -22,7 +21,7 @@ export class GamePlayersComponent implements OnInit {
     private eventService: EventsService, 
     private playerService: PlayerService, 
     public dialog: MatDialog, 
-    private cookieService: CookieService, 
+    private localStorage: LocalStorageService, 
     private router: Router
   ) { }
 
@@ -163,8 +162,9 @@ export class GamePlayersComponent implements OnInit {
   }
 
   quitGame() {
-    this.cookieService.deleteAll()
+    this.localStorage.deleteAll()
     this.router.navigateByUrl("/")
+    window.location.reload();
   }
 
   private removePlayer(id: string, nextPlayer: number) {
