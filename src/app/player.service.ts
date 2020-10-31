@@ -13,6 +13,7 @@ export class PlayerService {
 
   authority: string = ""
   username: string = null
+  gameId: string = null
   actionEvents: Subject<MessageEvent> = null
   keyPair = null
   publicKeyHeaderValue: string;
@@ -25,12 +26,21 @@ export class PlayerService {
     private localStorageService: LocalStorageService) { 
   }
 
+ action(actionPayload: any) {
+    
+    if (this.username) {
+      actionPayload.vectorClock = this.vectorClock.tick(this.username)
+      actionPayload.serverClock = this.vectorClock.serverClock[this.gameId]
+    }
+    this.actionEvents.next(this.sign(actionPayload))
+  }
 
   joinGame(server: string, gameId: string, username: string) {
     this.initialiseKeyPair();
     this.authority = server;
     const uri = this.authority + "/game/" + gameId + "/join?username=" + username
     this.username = username
+    this.gameId = gameId
     this.vectorClock.tickClocks(username, {}, 0, gameId)
     this.connectToPlayingEvents(server, gameId, username)
     return this.http.post(uri, {}, {headers: this.headers(this.publicKeyHeaderValue)})
@@ -39,7 +49,12 @@ export class PlayerService {
   private connectToPlayingEvents = (server, gameId, username) => {
     const websocketUri = server.replace("http://", "ws://").replace("https://", "wss://")
 
-    this.actionEvents = this.websocketService.connect(websocketUri + `/live/actions/${gameId}/${username}`)
+    this.username = username;
+    this.authority = server;
+
+    this.actionEvents = this.websocketService.connect(
+      websocketUri + `/live/actions/${gameId}/${username}`
+    )
 
     this.eventsService.streamGameEvents(username, gameId).subscribe((event: any) => console.log(JSON.stringify(event)))
    
@@ -51,25 +66,22 @@ export class PlayerService {
     this.authority = server
     const uri = server + "/game/" + gameId + "/" + username
     this.username = username
+    this.gameId = gameId
     this.vectorClock.tick(username)
     this.connectToPlayingEvents(server, gameId, username)
 
     return this.http.get(uri)
   }
 
-  action(action: any) {
-    
-    if (this.username) {
-      action.vectorClock = this.vectorClock.tick(this.username)
-    }
-    this.actionEvents.next(this.sign(action))
-  }
 
   private sign(action: any) {
     const sig = new Crypto.KJUR.crypto.Signature({"alg": "SHA256withRSA"});
     sig.init(this.keyPair.privateKey);   // rsaPrivateKey of RSAKey object
-    
-    const sigValueHex = sig.signString(JSON.stringify(action))
+    const signThis = JSON.stringify(action)
+    sig.updateString(signThis)
+
+    console.log(signThis)
+    const sigValueHex = sig.sign()
     action["signature"] = sigValueHex
     return action
   }
