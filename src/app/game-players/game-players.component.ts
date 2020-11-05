@@ -50,6 +50,7 @@ export class GamePlayersComponent implements OnInit {
           this.playerService.recoverGame(this.server, this.gameId, this.localplayer)
             .subscribe(
               (res: any) => {
+                this.playerService.action({Authorise: {playerId: this.localplayer}})
                 if (res.StartingGame) {
                   this.players = []
                   this.playerById = {}

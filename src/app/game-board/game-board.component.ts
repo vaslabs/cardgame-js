@@ -57,6 +57,7 @@ export class GameBoardComponent implements OnInit {
             this.startedGame(data.GameRestarted.StartedGame)
           }
         }
+        
       )
   }
 
