@@ -80,7 +80,6 @@ export class PlayerService {
     const signThis = JSON.stringify(action)
     sig.updateString(signThis)
 
-    console.log(signThis)
     const sigValueHex = sig.sign()
     action["signature"] = sigValueHex
     return action
