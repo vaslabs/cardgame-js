@@ -38,12 +38,22 @@ export class PlayerService {
   joinGame(server: string, gameId: string, username: string) {
     this.initialiseKeyPair();
     this.authority = server;
-    const uri = this.authority + "/game/" + gameId + "/join?username=" + username
+    const uri = this.authority + "/game/" + gameId + "/join"
     this.username = username
     this.gameId = gameId
     this.vectorClock.tickClocks(username, {}, 0, gameId)
     this.connectToPlayingEvents(server, gameId, username)
-    return this.http.post(uri, {}, {headers: this.headers(this.publicKeyHeaderValue)})
+    const payload = {
+      JoinGame: {
+        player: {
+          id: this.username, 
+          publicKey: this.publicKeyHeaderValue
+        }
+      }, 
+      vectorClock: this.vectorClock.vectorClock, 
+      serverClock: this.vectorClock.serverClock[gameId] || 0
+    } 
+    return this.http.post(uri, this.sign(payload))
   }
 
   private connectToPlayingEvents = (server, gameId, username) => {
@@ -118,7 +128,7 @@ export class PlayerService {
   }
 
   private publicKeyNoSpaces(value: string): string {
-    return btoa(value.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").split("\n").join(""))
+    return btoa(value.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").replace(/\s+/g, '').trim())
   }
 
 
