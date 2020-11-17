@@ -3,7 +3,7 @@
         <mat-list-item role="listitem">
             <div mat-line [class]="player.hasTurn ? 'hasTurn' : 'noTurn'" >
                 <div class="scroll-container">
-                    <button mat-raised-button color="warn"[disabled]="player.hasTurn" [matBadge]="player.points" matBadgeSize="medium" matBadgeOverlap="true" (click)="chooseNext(player.id)">{{player.id}}</button>
+                    <button mat-raised-button color="primary"[disabled]="player.hasTurn" [matBadge]="player.points" matBadgeSize="medium" matBadgeOverlap="true" (click)="chooseNext(player.id)">{{player.id}}</button>
                     <button *ngIf="gameStarted && player.id != localplayer && !player.hasTurn && gameLayout.canSteal" mat-flat-button color="warn" (click)="openDialog(player.id)">Steal card</button>
                     <button *ngIf="player.id == localplayer" color="warn" mat-icon-button (click)="kill(player.id)"><mat-icon>thumb_down_alt</mat-icon></button>
                 </div>
