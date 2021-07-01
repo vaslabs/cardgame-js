@@ -4,8 +4,8 @@
     <img mat-card-image [src]="cardImage" alt="hand">
   </a>
     <mat-card-actions>
-      <button *ngIf="!borrowed" mat-button (click)="play()">Play</button>
-      <button *ngIf="borrowed" mat-button (click)="returnToDeck()">Return</button>
-      <button *ngIf="!borrowed" mat-button (click)="openDialog()">Place in Deck</button>
+      <button style="margin:5px;"*ngIf="!borrowed" mat-raised-button (click)="play()">Play</button>
+      <button *ngIf="borrowed" mat-raised-button (click)="returnToDeck()">Return</button>
+      <button *ngIf="!borrowed" mat-raised-button (click)="openDialog()">Place in Deck</button>
     </mat-card-actions>
 </mat-card>

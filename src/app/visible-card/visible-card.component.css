@@ -1,12 +1,19 @@
-img {
-    height: 22rem;
-    width: 11rem;
-    cursor: zoom-in;
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+button {
+    font-family: 'Russo One', sans-serif;
 }
 
+img {
+    max-height: 8rem;
+    max-width: 7rem;
+    cursor: zoom-in;  
+}
 
 .visible-card {
     background-color: transparent;
     max-height: 32rem;
     margin-right: 1rem;
+    padding: 30px;
+    font-family: 'Russo One', sans-serif;
 }

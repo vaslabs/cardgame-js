@@ -1,13 +1,13 @@
 <br>
-<mat-slider thumbLabel min="minDice" max="10" [(ngModel)]="numberOfDice"></mat-slider>
+<mat-slider thumbLabel min="minDice" max="10" [(ngModel)]="numberOfDice" ></mat-slider>
 
 <mat-slider thumbLabel min="6" max="25" [(ngModel)]="sides"></mat-slider>
 
-<button mat-fab (click)="throw()">
+<button mat-fab (click)="throw()" color="basic">
     <mat-icon>casino</mat-icon>
 </button>
 
-<ul class="dice-result" [style]="'background-color: ' + colorchanger[nextColor]">
+<ul class="dice-result" [style]="'background-color: '" color="basic">
     <li *ngFor="let die of results">
         <p>{{ die.result }}</p>
     </li>

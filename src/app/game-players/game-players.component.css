@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
 .player-row button, .player-row mat-spinner,
 .player-row  {
   margin-right: 8px;
@@ -7,7 +9,6 @@
     max-width: 300px;
 } 
 
-
 mat-list-item {
   min-height: 50px;
   margin-top: 10px;
@@ -15,12 +16,11 @@ mat-list-item {
 
 button {
   margin-top: 11px;
+  font-family: 'Russo One', sans-serif;
 }
 
 button.quit {
   margin: 10%;
 }
 
-button.restart {
-  border: 1px solid;
-}
+

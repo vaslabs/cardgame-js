@@ -41,7 +41,7 @@ export class GamePlayersComponent implements OnInit {
       event => {
         if (event.NextPlayer) {
           this.setHasTurn(event.NextPlayer.player)
-        } if (event.PlayerJoined) {
+        } else if (event.PlayerJoined) {
           this.storePlayer(event.PlayerJoined.id, 0)
         } else if (event.GameConfiguration) {
           this.gameId = event.GameConfiguration.id
@@ -70,6 +70,8 @@ export class GamePlayersComponent implements OnInit {
           this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: event.MoveCard.card}})
         } else if (event.GameRestarted) {
           this.startedGame(event.GameRestarted.startedGame)
+        } else if (event.Unauthorised) {
+          this.playerService.action({Authorise: {playerId: this.localplayer}})
         }
       }
 
