@@ -42,6 +42,7 @@ export class EventsService {
   streamGameEvents(username: string, gameId: string): Observable<any> {
     this.username = username
     this.gameId = gameId
+    console.log(`Streaming game events for ${username}, ${gameId}`)
     const observable = new Observable(
       (observer: Observer<any>) => {
         observer.next = event => {

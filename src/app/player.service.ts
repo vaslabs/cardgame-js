@@ -38,7 +38,7 @@ export class PlayerService {
   joinGame(server: string, gameId: string, username: string) {
     this.initialiseKeyPair();
     this.authority = server;
-    const uri = this.authority + "/game/" + gameId + "/join"
+    const uri = `${this.authority}/game/${gameId}/join`
     this.username = username
     this.gameId = gameId
     this.vectorClock.tickClocks(username, {}, 0, gameId)
@@ -63,11 +63,12 @@ export class PlayerService {
     this.authority = server;
 
     this.actionEvents = this.websocketService.connect(
-      websocketUri + `/live/actions/${gameId}/${username}`
+      `${websocketUri}/live/actions/${gameId}/${username}`
     )
 
     this.eventsService.streamGameEvents(username, gameId).subscribe((event: any) => console.log(JSON.stringify(event)))
    
+    console.log("Streaming started")
   }
 
   recoverGame(server: string, gameId: string, username: string) {
@@ -105,11 +106,12 @@ export class PlayerService {
     if (!this.keyPairFromLocalStorage()) {
       const keyalg = "RSA";
       const keylen = 1024;
-      this.keyPair = Crypto.KEYUTIL.generateKeypair(keyalg, keylen)
-      const privateKeyFormat = Crypto.KEYUTIL.getPEM(this.keyPair.prvKeyObj, "PKCS8PRV");
+      const keyPair = Crypto.KEYUTIL.generateKeypair(keyalg, keylen)
+      const privateKeyFormat = Crypto.KEYUTIL.getPEM(keyPair.prvKeyObj, "PKCS8PRV");
       this.localStorageService.set("private-key", privateKeyFormat)
-      this.publicKeyHeaderValue = this.publicKeyNoSpaces(Crypto.KEYUTIL.getPEM(this.keyPair.pubKeyObj));
+      this.publicKeyHeaderValue = this.publicKeyNoSpaces(Crypto.KEYUTIL.getPEM(keyPair.pubKeyObj));
       this.localStorageService.set("public-key", this.publicKeyHeaderValue)
+      this.keyPairFromLocalStorage()
     }
   }
 
