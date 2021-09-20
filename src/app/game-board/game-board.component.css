@@ -6,6 +6,7 @@
 
 .grid-container {
     display: grid;
+    background-color: #f2f2f2;
     grid-template-areas:
       'join    join         join         join         join         join'
       'players discard-pile discard-pile discard-pile deck deck'
@@ -14,14 +15,13 @@
 
       ;
     grid-gap: 10px;
-    background-color: #6d6767;
     padding: 10px;
   }
   
   .grid-container > div {
-    background-color: rgba(255, 255, 255, 0.979);
+    background-color: #f2f2f2;
     text-align: center;
-    padding: 5px;
+    padding: 30px;
     font-size: 16px;
-    
+    box-shadow: 0px -6px 10px rgba(255, 255, 255, 1), 0px 4px 15px rgba(0, 0, 0, 0.15);
   }

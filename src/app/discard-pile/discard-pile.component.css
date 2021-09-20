@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
 mat-card {
-    background: #ffffff;
+    background: #f2f2f2;
     color: rgba(4, 4, 4, 0.87);
+   padding-bottom: 45px;
+      
   }
   
 mat-content p {
@@ -9,8 +12,8 @@ mat-content p {
 }
 
 .deck-top-card img {
-    height: 16rem;
-    width: 10rem;
+    height: 18rem;
+    width: 18rem;
 }
 
 .throwing-pile img {
@@ -28,11 +31,13 @@ mat-content p {
     grid-template-columns: auto auto;
 }
 .grid-item {
-    background-color: white;
+    background-color: #f2f2f2;
     font-size: 30px;
     text-align: center;
 }
 
 p {
     font-family: 'Russo One', sans-serif;
+    color: grey;
+    padding-top: 20px;
 }
