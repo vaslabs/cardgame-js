@@ -37,30 +37,29 @@ export class GamePlayersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventService.currentMessage.subscribe(
+    this.eventService.streamLocalEvents().subscribe(
+      event => {
+      if (event.GameConfiguration) {
+        this.gameId = event.GameConfiguration.id
+        this.localplayer = event.GameConfiguration.username
+        this.server = event.GameConfiguration.server
+      } else if (event.GameRestarted) {
+        this.startedGame(event.GameRestarted.startedGame)
+      } else if (event.StartingGame) {
+        this.players = []
+        this.playerById = {}
+        event.StartingGame.playersJoined.forEach(p => this.storePlayer(p.id, 0))
+        this.gameStarted = false
+      } else if (event.StartedGame) {
+        this.startedGame(event.StartedGame)
+      }
+    });
+    this.eventService.streamRemoteEvents().subscribe(
       event => {
         if (event.NextPlayer) {
           this.setHasTurn(event.NextPlayer.player)
         } if (event.PlayerJoined) {
           this.storePlayer(event.PlayerJoined.id, 0)
-        } else if (event.GameConfiguration) {
-          this.gameId = event.GameConfiguration.id
-          this.localplayer = event.GameConfiguration.username
-          this.server = event.GameConfiguration.server
-          this.playerService.recoverGame(this.server, this.gameId, this.localplayer)
-            .subscribe(
-              (res: any) => {
-                this.playerService.action({Authorise: {playerId: this.localplayer}})
-                if (res.StartingGame) {
-                  this.players = []
-                  this.playerById = {}
-                  res.StartingGame.playersJoined.forEach(p => this.storePlayer(p.id, 0))
-                  this.gameStarted = false
-                } else if (res.StartedGame) {
-                  this.startedGame(res.StartedGame)
-                }
-              }
-            )
         } else if (event.GameStarted) {
           this.gameStarted = true
           this.setHasTurn(event.GameStarted.startingPlayer)
@@ -68,8 +67,6 @@ export class GamePlayersComponent implements OnInit {
           this.removePlayer(event.PlayerLeft.player, event.PlayerLeft.nextCurrentPlayer)
         } else if (event.MoveCard && event.MoveCard.card.VisibleCard) {
           this.eventService.emitLocalEvent({GotCard: {playerId: this.localplayer, card: event.MoveCard.card}})
-        } else if (event.GameRestarted) {
-          this.startedGame(event.GameRestarted.startedGame)
         }
       }
 

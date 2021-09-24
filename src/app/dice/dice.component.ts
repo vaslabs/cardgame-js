@@ -22,19 +22,24 @@ export class DiceComponent implements OnInit {
   nextColor = 0
 
   ngOnInit(): void {
-    this.eventService.currentMessage.subscribe(
+    this.eventService.streamRemoteEvents().subscribe(
       (msg: any) => {
-        const gameConf = msg.GameConfiguration
-        if (gameConf) {
-          this.localplayer = gameConf.username
-          this.gameId = gameConf.id
-        } else if (msg.DiceThrow) {
+        if (msg.DiceThrow) {
           this.results = msg.DiceThrow.dice
           if (this.nextColor == this.colorchanger.length - 1)
             this.nextColor = 0;
           else
             this.nextColor +=1;
         }
+      }
+    )
+    this.eventService.streamLocalEvents().subscribe(
+      (msg: any) => {
+        const gameConf = msg.GameConfiguration
+        if (gameConf) {
+          this.localplayer = gameConf.username
+          this.gameId = gameConf.id
+        } 
       }
     )
   }

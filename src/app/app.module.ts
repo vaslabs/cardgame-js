@@ -10,7 +10,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { GameEventsComponent } from './game-events/game-events.component';
 import {MatListModule} from '@angular/material/list';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { GamePlayersComponent } from './game-players/game-players.component';
@@ -46,7 +45,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   declarations: [
     AppComponent,
     AdminComponent,
-    GameEventsComponent,
     GameBoardComponent,
     GamePlayersComponent,
     DeckComponent,

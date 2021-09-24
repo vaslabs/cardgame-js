@@ -17,16 +17,14 @@ export class GameBoardComponent implements OnInit {
   constructor(private playerService: PlayerService, private eventsService: EventsService, private _snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
-    this.eventsService.currentMessage.subscribe(
+    this.eventsService.streamLocalEvents().subscribe(
       (msg: any) => {
+        console.log(JSON.stringify(msg))
         if (msg.GameConfiguration) {
           this.gameId = msg.GameConfiguration.id
           this.userId = msg.GameConfiguration.username
           this.server = msg.GameConfiguration.server
-        } else if (msg.GameStarted) {
           this.loadGame()
-        } else {
-          this.openSnackBar(msg)
         }
       }
     )
@@ -51,6 +49,7 @@ export class GameBoardComponent implements OnInit {
     this.playerService.recoverGame(this.server, this.gameId, this.userId)
       .subscribe(
         (data: any) => {
+          this.eventsService.emitLocalEvent(data);
           if (data.StartedGame) {
             this.startedGame(data.StartedGame)
           } else if (data.GameRestarted) {
@@ -66,7 +65,6 @@ export class GameBoardComponent implements OnInit {
     this.deckComponent.localplayer = this.userId;
     this.deckComponent.gameId = this.gameId;
     this.gameConfiguration = {GameConfiguration: {id: this.gameId, username: this.userId, server: this.server}};
-    this.eventsService.emitLocalEvent(this.gameConfiguration);
   }
 
   gameConfiguration = {}

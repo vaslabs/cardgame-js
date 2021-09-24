@@ -27,7 +27,7 @@ export class DiscardPileComponent implements OnInit {
   constructor(private eventService: EventsService, private _bottomSheet: MatBottomSheet, private playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.eventService.currentMessage.subscribe(
+    this.eventService.streamRemoteEvents().subscribe(
       msg => {
         if (msg.PlayedCard) {
           this.updateCard(msg.PlayedCard.card)

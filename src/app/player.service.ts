@@ -14,25 +14,25 @@ export class PlayerService {
   authority: string = ""
   username: string = null
   gameId: string = null
-  actionEvents: Subject<MessageEvent> = null
   keyPair = null
   publicKeyHeaderValue: string;
 
   constructor(
     private http: HttpClient, 
     private vectorClock: VectorClockService, 
-    private websocketService: WebsocketService, 
     private eventsService: EventsService,
     private localStorageService: LocalStorageService) { 
   }
 
  action(actionPayload: any) {
-    
+    console.log(`Actioning ${JSON.stringify(actionPayload)}`)
     if (this.username) {
       actionPayload.vectorClock = this.vectorClock.tick(this.username)
       actionPayload.serverClock = this.vectorClock.serverClock[this.gameId]
     }
-    this.actionEvents.next(this.sign(actionPayload))
+    const signedEvent = this.sign(actionPayload)
+    console.log(`Signed event is ${JSON.stringify(signedEvent)}`)
+    this.eventsService.emitRemoteEvent(signedEvent)
   }
 
   joinGame(server: string, gameId: string, username: string) {
@@ -42,7 +42,6 @@ export class PlayerService {
     this.username = username
     this.gameId = gameId
     this.vectorClock.tickClocks(username, {}, 0, gameId)
-    this.connectToPlayingEvents(server, gameId, username)
     const payload = {
       JoinGame: {
         player: {
@@ -61,14 +60,18 @@ export class PlayerService {
 
     this.username = username;
     this.authority = server;
-
-    this.actionEvents = this.websocketService.connect(
-      `${websocketUri}/live/actions/${gameId}/${username}`
+    console.log("Connecting...")
+    this.eventsService.connect(
+      `${websocketUri}/live/actions/${gameId}/${username}`,
+      username,
+      gameId
     )
 
-    this.eventsService.streamGameEvents(username, gameId).subscribe((event: any) => console.log(JSON.stringify(event)))
-   
     console.log("Streaming started")
+
+    console.log(`Authorising ${this.username}`)
+    this.action({Authorise: {playerId: this.username}})
+
   }
 
   recoverGame(server: string, gameId: string, username: string) {
@@ -86,6 +89,7 @@ export class PlayerService {
 
 
   private sign(action: any) {
+    console.log(`Signing ${JSON.stringify(action)}`)
     const sig = new Crypto.KJUR.crypto.Signature({"alg": "SHA256withRSA"});
     sig.init(this.keyPair.privateKey);   // rsaPrivateKey of RSAKey object
     const signThis = JSON.stringify(action)

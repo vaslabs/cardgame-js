@@ -33,7 +33,7 @@ export class VisibleCardComponent implements OnInit {
     private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit(): void {
-    this.eventService.currentMessage.subscribe(
+    this.eventService.streamLocalEvents().subscribe(
       msg =>
         {
           if (msg.GameConfiguration) {

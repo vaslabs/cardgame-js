@@ -21,7 +21,7 @@ export class DeckComponent implements OnInit {
   constructor(private playerService: PlayerService, private eventService: EventsService) { }
 
   ngOnInit(): void {
-    this.eventService.currentMessage.subscribe(
+    this.eventService.streamRemoteEvents().subscribe(
       (msg: any) => {
         if (msg.GotCard) {
           let card = msg.GotCard.card

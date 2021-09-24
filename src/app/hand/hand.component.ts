@@ -18,20 +18,30 @@ export class HandComponent implements OnInit{
   server = ""
  
   ngOnInit(): void {
-    this.eventService.currentMessage.subscribe(
+    this.eventService.streamLocalEvents().subscribe((msg: any) => {
+      if (msg.GameConfiguration) {
+        this.gameId = msg.GameConfiguration.id
+        this.playerId = msg.GameConfiguration.username
+        this.server = msg.GameConfiguration.server
+      } else if (msg.RecoverBorrow) {
+        msg.RecoverBorrow.forEach(card => this.borrowCard(card.VisibleCard));
+      } else if (msg.GotCard) {
+        if (msg.GotCard.card.VisibleCard) {
+          this.addCard(msg.GotCard.card.VisibleCard)
+        }
+      }  else if (msg.RecoverHand) {
+        msg.RecoverHand.forEach(card => this.addCard(card.VisibleCard))
+      } 
+    })
+
+    this.eventService.streamRemoteEvents().subscribe(
       msg => {
         if (msg.GotCard) {
           if (msg.GotCard.card.VisibleCard) {
             this.addCard(msg.GotCard.card.VisibleCard)
           }
-        } else if (msg.GameConfiguration) {
-          this.gameId = msg.GameConfiguration.id
-          this.playerId = msg.GameConfiguration.username
-          this.server = msg.GameConfiguration.server
         } else if (msg.PlayedCard) {
           this.cards = this.cards.filter(c => c.id != msg.PlayedCard.card.id)
-        } else if (msg.RecoverHand) {
-          msg.RecoverHand.forEach(card => this.addCard(card.VisibleCard))
         } else if (msg.MoveCard && msg.MoveCard.card.HiddenCard && msg.MoveCard.from == this.playerId) {
           this.removeCard(msg.MoveCard.card.HiddenCard.id)
         } else if (msg.MoveCard && msg.MoveCard.card.VisibleCard && msg.MoveCard.from == this.playerId) {
@@ -54,8 +64,6 @@ export class HandComponent implements OnInit{
           if (msg.CardRecovered.card.VisibleCard && msg.CardRecovered.player == this.playerId) {
             this.addCard(msg.CardRecovered.card.VisibleCard)
           }
-        } else if (msg.RecoverBorrow) {
-          msg.RecoverBorrow.forEach(card => this.borrowCard(card.VisibleCard));
         } else if (msg.ShuffledHand) {
           if (msg.ShuffledHand.playerId == this.playerId) {
             this.cards = []

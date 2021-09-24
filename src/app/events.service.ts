@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject, Observer } from 'rxjs';
 import { VectorClockService } from './vector-clock.service';
 import { WebsocketService } from './websocket.service';
@@ -8,9 +8,11 @@ import { WebsocketService } from './websocket.service';
 })
 export class EventsService {
 
+
+
   defaultMessage: any = {}
-  private messageSource = new BehaviorSubject(this.defaultMessage);
-  currentMessage: Observable<any> = this.messageSource.asObservable();
+  private localMessageSource = new BehaviorSubject(this.defaultMessage);
+  localMessage: Observable<any> = this.localMessageSource.asObservable();
   username = null;
   gameId = null;
 
@@ -21,45 +23,32 @@ export class EventsService {
   ) { 
   }
 
-  emitLocalEvent(event: any) {
-    this.messageSource.next(event)
+  connect(url: string, username, gameId) {
+    this.username = username
+    this.gameId = gameId
+    this.websocketService.connect(url);
   }
 
-  emitRemoteEvent(event: MessageEvent) {
-    if (event.data != "") {
-      const gameEvent = JSON.parse(event.data)
-      if (this.isFutureEvent(gameEvent)) {
-        this.messageSource.next(gameEvent)
-      }
-      this.vectorClock.tickClocks(this.username, gameEvent.vectorClock, gameEvent.serverClock, this.gameId)
+  emitLocalEvent(event: any) {
+    this.localMessageSource.next(event)
+  }
+
+  emitRemoteEvent(gameEvent) {
+    if (gameEvent && this.username && this.gameId) {
+      console.log(`Emitting ${JSON.stringify(gameEvent)}?`)
+      this.websocketService.sendMessage(gameEvent)
     }
   }
 
   isFutureEvent(event): boolean {
-    return event.serverClock > this.vectorClock.serverClock[this.gameId]
+    return event.serverClock === undefined || event.serverClock > this.vectorClock.serverClock[this.gameId]
   }
 
-  streamGameEvents(username: string, gameId: string): Observable<any> {
-    this.username = username
-    this.gameId = gameId
-    console.log(`Streaming game events for ${username}, ${gameId}`)
-    const observable = new Observable(
-      (observer: Observer<any>) => {
-        observer.next = event => {
-          this._zone.run(() => {
-            this.emitRemoteEvent(event)
-          });
-        };
+  streamRemoteEvents(): Observable<any> {
+    return this.websocketService.getMessageStream()
+  }
 
-        observer.error = error => {
-          this._zone.run( () => {
-            observer.error(error)
-          });
-        };
-        this.websocketService.subject.subscribe(observer);
-       
-      }
-    )
-    return observable
+  streamLocalEvents(): Observable<any> {
+    return this.localMessage;
   }
 }

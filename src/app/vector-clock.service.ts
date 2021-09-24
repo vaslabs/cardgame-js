@@ -15,6 +15,7 @@ export class VectorClockService {
   }
 
   tick(me: string): { [key:string]:number; } {
+    console.log(`Ticking ${me} clock`)
     if (this.vectorClock[me] >= 0)
       this.vectorClock[me]++
     else
