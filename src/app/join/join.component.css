@@ -10,6 +10,14 @@
     font-family: 'Russo One', sans-serif;
 }
 
+mat-label {
+    font-family: 'Russo One', sans-serif;
+}
+input {
+    font-family: 'Russo One', sans-serif;
+    font-size: medium;
+}
+
 .login-wrapper {
     height: 100%;
 }

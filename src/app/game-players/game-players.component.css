@@ -1,12 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
 .player-row button, .player-row mat-spinner,
 .player-row  {
   margin-right: 8px;
 }
+
 .scroll-container {
     overflow-x: auto;
     max-width: 300px;
 } 
 
+div {
+  
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+}
 
 mat-list-item {
   min-height: 50px;
@@ -14,13 +23,21 @@ mat-list-item {
 }
 
 button {
-  margin-top: 11px;
+  margin-top: 50px;
+  color: gray;
+  font-family: 'Russo One', sans-serif;
 }
 
 button.quit {
   margin: 10%;
+  background-color: crimson;
+  color:#f2f2f2;
 }
 
 button.restart {
-  border: 1px solid;
+  background-color: #6aa84fff;
+  color:#f2f2f2;
 }
+
+
+
