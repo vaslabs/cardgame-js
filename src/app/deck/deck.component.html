@@ -6,11 +6,13 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <div class="button-row">
-        <button mat-button (click)="drawCard()" color="primary">Draw</button>
-        <button mat-button (click)="drawFromTheBottom()" color="warn">Draw from bottom</button>
-        <button mat-button (click)="shuffle()" color="warn">Shuffle</button>
-        <button mat-button (click)="borrow(0)" color="warn">Borrow</button>
+      <div class="button-row button-row-top">
+        <button mat-button (click)="drawCard()" mat-raised-button color="basic">Draw</button>
+        <button mat-button (click)="drawFromTheBottom()" mat-raised-button color="basic">Draw from bottom</button>
+        <button mat-button (click)="shuffle()" mat-raised-button color="basic">Shuffle</button>
+        <button mat-button (click)="borrow(0)" mat-raised-button color="basic">Borrow</button>
       </div>
+
+      
     </mat-card-actions>
 </mat-card>
