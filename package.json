@@ -23,7 +23,7 @@
     "@angular/platform-browser-dynamic": "^13.3.11",
     "@angular/router": "^13.3.11",
     "angular-cli-ghpages": "^0.6.2",
-    "jsrsasign": "^10.2.0",
+    "jsrsasign": "^10.5.25",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.5"
